@@ -10,7 +10,12 @@ public class mainAlan {
                 while(actual != null && actual.getPrioridad() >= p) {
                     actual = listaPacientes.getNext(actual);
                 }
-                listaPacientes.addAfter(actual, paciente);
+                if(actual!=null){
+                    listaPacientes.addAfter(actual, paciente);
+                }
+                else{
+                    listaPacientes.addLast(paciente);
+                }
         }
     }
     public static void main(String[] args) {

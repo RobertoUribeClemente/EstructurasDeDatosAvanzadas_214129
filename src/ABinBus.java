@@ -5,7 +5,7 @@ public class ABinBus<T extends Comparable<T>> {
         raiz = null;
     }
     
-    public boolean estaVacio(){
+    public boolean isEmpty(){
         return raiz == null;
     }
     
@@ -19,8 +19,8 @@ public class ABinBus<T extends Comparable<T>> {
     private void preOrden(NodoDoble<T> actual, StringBuilder sB){
         if(actual != null){
             sB.append(actual.getDato()).append(" ");
-            preOrden(actual.getIzquierdo(), sB);
-            preOrden(actual.getDerecho(), sB);
+            preOrden(actual.getBefore(), sB);
+            preOrden(actual.getNext(), sB);
         }
             
         
@@ -34,9 +34,9 @@ public class ABinBus<T extends Comparable<T>> {
     
     private void inOrden(NodoDoble<T> actual, StringBuilder sB){
         if(actual!=null){
-            inOrden(actual.getIzquierdo(), sB);
+            inOrden(actual.getBefore(), sB);
             sB.append(actual.getDato()).append(" ");
-            inOrden(actual.getDerecho(), sB);
+            inOrden(actual.getNext(), sB);
         }
             
     }
@@ -50,8 +50,8 @@ public class ABinBus<T extends Comparable<T>> {
     
     private void postOrden(NodoDoble<T> actual, StringBuilder sB){
         if(actual != null){
-            postOrden(actual.getIzquierdo(), sB);
-            postOrden(actual.getDerecho(), sB);
+            postOrden(actual.getBefore(), sB);
+            postOrden(actual.getNext(), sB);
             sB.append(actual.getDato()).append(" ");
         }
     }
@@ -59,7 +59,7 @@ public class ABinBus<T extends Comparable<T>> {
     
     public boolean agrega(T dato){
         boolean resp = false;
-        if(estaVacio()){
+        if(isEmpty()){
             raiz = new NodoDoble(dato);
             resp = true;
         }   
@@ -74,21 +74,21 @@ public class ABinBus<T extends Comparable<T>> {
             return false;
         else{
             if(actual.getDato().compareTo(dato)>0){
-                if(actual.getIzquierdo() == null){
-                    actual.setIzquierdo(new NodoDoble(dato));
+                if(actual.getBefore() == null){
+                    actual.setNext(new NodoDoble(dato));
                     return true;
                 }
                 else
-                    return agrega(actual.getIzquierdo(), dato);
+                    return agrega(actual.getBefore(), dato);
                 
             }
             else
-                if(actual.getDerecho() == null){
-                    actual.setDerecho(new NodoDoble(dato));
+                if(actual.getBefore() == null){
+                    actual.setNext(new NodoDoble(dato));
                     return true;
                 }
             else
-                    return agrega(actual.getDerecho(), dato);
+                    return agrega(actual.getNext(), dato);
         }
     }
     

@@ -15,19 +15,19 @@ public class NodoDoble <T> {
         this.dato = dato;
     }
 
-    public NodoDoble<T> getAnterior() {
+    public NodoDoble<T> getBefore() {
         return anterior;
     }
 
-    public void setAnterior(NodoDoble<T> anterior) {
+    public void setBefore(NodoDoble<T> anterior) {
         this.anterior = anterior;
     }
 
-    public NodoDoble<T> getSiguiente() {
+    public NodoDoble<T> getNext() {
         return siguiente;
     }
 
-    public void setSiguiente(NodoDoble<T> siguiente) {
+    public void setNext(NodoDoble<T> siguiente) {
         this.siguiente = siguiente;
     }
 
@@ -37,8 +37,5 @@ public class NodoDoble <T> {
 
     public void setDato(T dato) {
         this.dato = dato;
-    }
-    
-    
-    
+    } 
 }
