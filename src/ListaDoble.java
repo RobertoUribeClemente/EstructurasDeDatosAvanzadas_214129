@@ -16,7 +16,6 @@ public class ListaDoble<T> implements Iterable<T>{
         return new IteradorDoble(primero);                         //Necesitamos este metodo
     }
     
-
     
     @Override
     public String toString(){
@@ -26,7 +25,7 @@ public class ListaDoble<T> implements Iterable<T>{
         return sB.toString();
     }
 
-        public void addFirst(T dato){
+    public void addFirst(T dato){
         NodoDoble<T> nuevo = new NodoDoble(dato);
         if(!isEmpty()){
             nuevo.setNext(primero);
@@ -37,6 +36,7 @@ public class ListaDoble<T> implements Iterable<T>{
         }
         primero = nuevo;
     }
+
     public T delFirst(){
         T eliminado = null;
         if(!isEmpty()){
@@ -48,6 +48,7 @@ public class ListaDoble<T> implements Iterable<T>{
         }
         return eliminado;
     }
+
     public void addLast(T dato){
         NodoDoble<T> nuevo = new NodoDoble<>(dato);
         if(isEmpty())
@@ -74,6 +75,7 @@ public class ListaDoble<T> implements Iterable<T>{
         }
         return eliminado;
     }
+    
     public void addAfter(NodoDoble<T> actual, T dato){
         NodoDoble<T> aux=primero;
         while(aux != null && !aux.equals(actual)){
@@ -94,6 +96,7 @@ public class ListaDoble<T> implements Iterable<T>{
             throw new IllegalArgumentException("El nodo actual no se encuentra en la lista.");
         }
     }
+    
     public T delDato(T dato) {
         T eliminado = null;
         if (!isEmpty() && dato != null) {
