@@ -1,6 +1,6 @@
 public class mainAlan {
     public static void main(String[] args) {
-        ListaDoble<Paciente> listaPacientes = new ListaDoble<>();
+        ListaDoble listaPacientes = new ListaDoble();
         
         Paciente paciente1 = new Paciente("John Doe", 24, "ID001", "123 Main St", 2);
         Paciente paciente2 = new Paciente("Jane Smith", 32, "ID002", "456 Elm St", 5);

@@ -38,4 +38,10 @@ public class Paciente {
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Paciente[nombre=%s, edad=%d, identificacion=%s, direccion=%s, prioridad=%d]",
+                nombre, edad, identificacion, direccion, prioridad);
+    }
 }

@@ -116,11 +116,12 @@ public class ListaDoble {
         return dato;
     }
     
-    public void agregaOrdenado(Paciente obj, int p) {
+    public void agregaOrdenado(Paciente obj) {
         if(isEmpty()) {
             addFirst(obj);
         } else {
             NodoDoble<Paciente> actual = primero;
+            int p = obj.getPrioridad();
             while(actual != null && actual.getDato().getPrioridad() >= p) {
                 actual = actual.getNext();
             }
@@ -131,5 +132,17 @@ public class ListaDoble {
                 addLast(obj);
             }
         }
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        NodoDoble<Paciente> aux = primero;
+        while (aux != null) {
+            sb.append(aux.getDato().toString());
+            if (aux.getNext() != null) sb.append(System.lineSeparator());
+            aux = aux.getNext();
+        }
+        return sb.toString();
     }
 }
