@@ -1,6 +1,8 @@
-public class ListaDoble<T> implements Iterable<T>{
-    private NodoDoble<T> primero;
-    private NodoDoble<T> ultimo;
+import java.util.Iterator;
+
+public class ListaDoble<Paciente> implements Iterable<Paciente>{
+    private NodoDoble<Paciente> primero;
+    private NodoDoble<Paciente> ultimo;
 
     public ListaDoble() {
         primero = null;
@@ -12,21 +14,21 @@ public class ListaDoble<T> implements Iterable<T>{
     }
     
     @Override
-    public Iterator<T> iterator() {
-        return new IteradorDoble(primero);                         //Necesitamos este metodo
+    public Iterator<Paciente> iterator() {
+        return new IteradorDoble<>(primero);                         //Necesitamos este metodo
     }
     
     
     @Override
     public String toString(){
         StringBuilder sB = new StringBuilder();
-        for(T dato: this)
+        for(Paciente dato: this)
             sB.append(dato).append(" ");
         return sB.toString();
     }
 
-    public void addFirst(T dato){
-        NodoDoble<T> nuevo = new NodoDoble(dato);
+    public void addFirst(Paciente dato){
+        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
         if(!isEmpty()){
             nuevo.setNext(primero);
             primero.setBefore(nuevo);
@@ -37,8 +39,8 @@ public class ListaDoble<T> implements Iterable<T>{
         primero = nuevo;
     }
 
-    public T delFirst(){
-        T eliminado = null;
+    public Paciente delFirst(){
+        Paciente eliminado = null;
         if(!isEmpty()){
             eliminado = primero.getDato();           
             primero = primero.getNext();
@@ -49,8 +51,8 @@ public class ListaDoble<T> implements Iterable<T>{
         return eliminado;
     }
 
-    public void addLast(T dato){
-        NodoDoble<T> nuevo = new NodoDoble<>(dato);
+    public void addLast(Paciente dato){
+        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
         if(isEmpty())
             primero = nuevo;
         else{
@@ -61,8 +63,8 @@ public class ListaDoble<T> implements Iterable<T>{
         ultimo = nuevo;
     }
         
-    public T delLast(){
-        T eliminado = null;
+    public Paciente delLast(){
+        Paciente eliminado = null;
         if(!isEmpty()){
             eliminado = ultimo.getDato();
             ultimo = ultimo.getBefore();
@@ -76,13 +78,13 @@ public class ListaDoble<T> implements Iterable<T>{
         return eliminado;
     }
     
-    public void addAfter(NodoDoble<T> actual, T dato){
-        NodoDoble<T> aux=primero;
+    public void addAfter(NodoDoble<Paciente> actual, Paciente dato){
+        NodoDoble<Paciente> aux=primero;
         while(aux != null && !aux.equals(actual)){
             aux = aux.getNext();
         }
         if(aux != null){
-            NodoDoble<T> nuevo = new NodoDoble<>(dato);
+            NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
             nuevo.setNext(actual.getNext());
             nuevo.setBefore(actual);
             actual.setNext(nuevo);
@@ -97,10 +99,10 @@ public class ListaDoble<T> implements Iterable<T>{
         }
     }
     
-    public T delDato(T dato) {
-        T eliminado = null;
+    public Paciente delDato(Paciente dato) {
+        Paciente eliminado = null;
         if (!isEmpty() && dato != null) {
-            NodoDoble<T> actual = primero;
+            NodoDoble<Paciente> actual = primero;
             while (actual != null && eliminado == null) {
                 if (dato.equals(actual.getDato())) {
                     eliminado = delNodo(actual);
@@ -112,8 +114,8 @@ public class ListaDoble<T> implements Iterable<T>{
     }
 
 // Método auxiliar para eliminar un nodo y actualizar los enlaces
-    private T delNodo(NodoDoble<T> nodo) {
-        T dato = nodo.getDato();
+    private Paciente delNodo(NodoDoble<Paciente> nodo) {
+        Paciente dato = nodo.getDato();
 
         // Caso 1: Nodo es el único en la lista
         if (nodo == primero && nodo == ultimo) {
@@ -139,15 +141,19 @@ public class ListaDoble<T> implements Iterable<T>{
         return dato;
     }
     
-    public void intercalaListas(ListaDoble<T> otraL){
-        if(!isEmpty()){
-            if(!otraL.isEmpty()){
-                
+    public void agregaOrdenado(Paciente obj, int p) {
+        if(isEmpty()) {
+            addFirst(obj);
+        } else {
+            NodoDoble<Paciente> actual = primero;
+            while(actual != null && actual.getPrioridad() >= p) {
+                    actual = actual.getNext();
             }
+                if(actual!=null){
+                    addAfter(actual, obj);
+                }
+                else{
+                    addLast(obj);
+                }
         }
-        else
-            if(!otraL.isEmpty()){
-                
-            }
     }
-}

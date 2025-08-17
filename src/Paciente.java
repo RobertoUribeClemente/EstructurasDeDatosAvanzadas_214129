@@ -38,3 +38,4 @@ public class Paciente {
     public void setPrioridad(int prioridad) {
         this.prioridad = prioridad;
     }
+}
