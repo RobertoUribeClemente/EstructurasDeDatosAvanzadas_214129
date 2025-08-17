@@ -10,7 +10,7 @@ public class ListaDoble {
     public boolean isEmpty(){
         return primero == null;
     }
-    
+
     public void addFirst(Paciente dato){
         NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
         if(!isEmpty()){
@@ -18,7 +18,7 @@ public class ListaDoble {
             primero.setBefore(nuevo);
         }
         else{
-            ultimo = nuevo; 
+            ultimo = nuevo;
         }
         primero = nuevo;
     }
@@ -26,7 +26,7 @@ public class ListaDoble {
     public Paciente delFirst(){
         Paciente eliminado = null;
         if(!isEmpty()){
-            eliminado = primero.getDato();           
+            eliminado = primero.getDato();
             primero = primero.getNext();
             if(primero==null){
                 ultimo = null;
@@ -47,7 +47,7 @@ public class ListaDoble {
         }
         ultimo = nuevo;
     }
-        
+
     public Paciente delLast(){
         Paciente eliminado = null;
         if(!isEmpty()){
@@ -61,7 +61,7 @@ public class ListaDoble {
         }
         return eliminado;
     }
-    
+
     public void addAfter(NodoDoble<Paciente> actual, Paciente dato){
         NodoDoble<Paciente> aux = primero;
         while(aux != null && aux != actual){ // comparar referencia para verificar presencia
@@ -82,7 +82,7 @@ public class ListaDoble {
             throw new IllegalArgumentException("El nodo actual no se encuentra en la lista.");
         }
     }
-    
+
     public Paciente delDato(Paciente dato) {
         Paciente eliminado = null;
         if (!isEmpty() && dato != null) {
@@ -115,7 +115,7 @@ public class ListaDoble {
         }
         return dato;
     }
-    
+
     public void agregaOrdenado(Paciente obj) {
         if(isEmpty()) {
             addFirst(obj);
@@ -133,7 +133,7 @@ public class ListaDoble {
             }
         }
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
