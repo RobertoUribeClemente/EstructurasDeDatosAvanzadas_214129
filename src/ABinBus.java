@@ -9,6 +9,21 @@ public class ABinBus<T extends Comparable<T>> {
         return raiz == null;
     }
 
+    public String inOrden(){
+        StringBuilder sB = new StringBuilder();
+        inOrden(raiz,sB);
+        return sB.toString();
+    }
+
+    private void inOrden(NodoDoble<T> actual, StringBuilder sB){
+        if(actual!=null){
+            inOrden(actual.getBefore(), sB);
+            sB.append(actual.getDato()).append(" ");
+            inOrden(actual.getNext(), sB);
+        }
+
+    }
+    /*
     public String preOrden(){
         StringBuilder sB= new StringBuilder();
         preOrden(raiz, sB);
@@ -25,20 +40,7 @@ public class ABinBus<T extends Comparable<T>> {
 
     }
 
-    public String inOrden(){
-        StringBuilder sB = new StringBuilder();
-        inOrden(raiz,sB);
-        return sB.toString();
-    }
 
-    private void inOrden(NodoDoble<T> actual, StringBuilder sB){
-        if(actual!=null){
-            inOrden(actual.getBefore(), sB);
-            sB.append(actual.getDato()).append(" ");
-            inOrden(actual.getNext(), sB);
-        }
-
-    }
 
     public String postOrden(){
         StringBuilder sB =new StringBuilder();
@@ -53,11 +55,12 @@ public class ABinBus<T extends Comparable<T>> {
             sB.append(actual.getDato()).append(" ");
         }
     }
+    */
 
     public boolean agrega(T dato){
-        boolean resp = false;
+        boolean resp;
         if(isEmpty()){
-            raiz = new NodoDoble(dato);
+            raiz = new NodoDoble<>(dato);
             resp = true;
         }
         else
@@ -71,24 +74,26 @@ public class ABinBus<T extends Comparable<T>> {
         else{
             if(actual.getDato().compareTo(dato)>0){
                 if(actual.getBefore() == null){
-                    actual.setNext(new NodoDoble(dato));
+                    actual.setBefore(new NodoDoble<>(dato));
                     return true;
                 }
                 else
                     return agrega(actual.getBefore(), dato);
             }
-            else
-                if(actual.getBefore() == null){
-                    actual.setNext(new NodoDoble(dato));
+            else{
+                if(actual.getNext() == null){
+                    actual.setNext(new NodoDoble<>(dato));
                     return true;
                 }
-            else
+                else{
                     return agrega(actual.getNext(), dato);
+                }
+            }
         }
     }
 
     public static void main(String[] args) {
-        ABinBus<Integer> num = new ABinBus();
+        ABinBus<Integer> num = new ABinBus<>();
         num.agrega(600);
         num.agrega(350);
         num.agrega(180);
@@ -97,7 +102,10 @@ public class ABinBus<T extends Comparable<T>> {
         num.agrega(950);
 
         System.out.println("\nEn orden inOrden: "+num.inOrden());
-        System.out.println("\nEn orden preOrden: "+num.preOrden());
-        System.out.println("\nEn orden postOrden: "+num.postOrden());
+        /*
+         System.out.println("\nEn orden preOrden: "+num.preOrden());
+         System.out.println("\nEn orden postOrden: "+num.postOrden());
+         */
+
     }
 }

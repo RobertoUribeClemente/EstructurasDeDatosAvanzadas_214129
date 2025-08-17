@@ -31,7 +31,7 @@ public class ListaDoble {
             if(primero==null){
                 ultimo = null;
             } else {
-                primero.setBefore(null); // corregido: actualizar enlace backward
+                primero.setBefore(null);
             }
         }
         return eliminado;
