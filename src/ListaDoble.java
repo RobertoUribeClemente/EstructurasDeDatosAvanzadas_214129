@@ -1,6 +1,4 @@
-import java.util.Iterator;
-
-public class ListaDoble<Paciente> implements Iterable<Paciente>{
+public class ListaDoble {
     private NodoDoble<Paciente> primero;
     private NodoDoble<Paciente> ultimo;
 
@@ -13,20 +11,6 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
         return primero == null;
     }
     
-    @Override
-    public Iterator<Paciente> iterator() {
-        return new IteradorDoble<>(primero);                         //Necesitamos este metodo
-    }
-    
-    
-    @Override
-    public String toString(){
-        StringBuilder sB = new StringBuilder();
-        for(Paciente dato: this)
-            sB.append(dato).append(" ");
-        return sB.toString();
-    }
-
     public void addFirst(Paciente dato){
         NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
         if(!isEmpty()){
@@ -45,7 +29,9 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
             eliminado = primero.getDato();           
             primero = primero.getNext();
             if(primero==null){
-                ultimo=null;
+                ultimo = null;
+            } else {
+                primero.setBefore(null); // corregido: actualizar enlace backward
             }
         }
         return eliminado;
@@ -58,7 +44,6 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
         else{
             ultimo.setNext(nuevo);
             nuevo.setBefore(ultimo);
-            
         }
         ultimo = nuevo;
     }
@@ -70,8 +55,7 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
             ultimo = ultimo.getBefore();
             if(ultimo == null){ //Había 1 sólo nodo
                 primero = null;
-            } //LA LISTA QUEDA VACIA
-            else {
+            } else {
                 ultimo.setNext(null); //Eliminamos el enlace al último nodo
             }
         }
@@ -79,8 +63,8 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
     }
     
     public void addAfter(NodoDoble<Paciente> actual, Paciente dato){
-        NodoDoble<Paciente> aux=primero;
-        while(aux != null && !aux.equals(actual)){
+        NodoDoble<Paciente> aux = primero;
+        while(aux != null && aux != actual){ // comparar referencia para verificar presencia
             aux = aux.getNext();
         }
         if(aux != null){
@@ -113,28 +97,19 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
         return eliminado;
     }
 
-// Método auxiliar para eliminar un nodo y actualizar los enlaces
     private Paciente delNodo(NodoDoble<Paciente> nodo) {
         Paciente dato = nodo.getDato();
 
-        // Caso 1: Nodo es el único en la lista
         if (nodo == primero && nodo == ultimo) {
             primero = null;
             ultimo = null;
-        }
-        // Caso 2: Nodo es el primero
-        else if (nodo == primero) {
+        } else if (nodo == primero) {
             primero = primero.getNext();
-            primero.setBefore(null);
-        }
-        // Caso 3: Nodo es el último
-        else 
-            if (nodo == ultimo) {
+            if (primero != null) primero.setBefore(null);
+        } else if (nodo == ultimo) {
             ultimo = ultimo.getBefore();
-            ultimo.setNext(null);
-        }
-        // Caso 4: Nodo está en el medio
-        else {
+            if (ultimo != null) ultimo.setNext(null);
+        } else {
             nodo.getBefore().setNext(nodo.getNext());
             nodo.getNext().setBefore(nodo.getBefore());
         }
@@ -146,14 +121,15 @@ public class ListaDoble<Paciente> implements Iterable<Paciente>{
             addFirst(obj);
         } else {
             NodoDoble<Paciente> actual = primero;
-            while(actual != null && actual.getPrioridad() >= p) {
-                    actual = actual.getNext();
+            while(actual != null && actual.getDato().getPrioridad() >= p) {
+                actual = actual.getNext();
             }
-                if(actual!=null){
-                    addAfter(actual, obj);
-                }
-                else{
-                    addLast(obj);
-                }
+            if(actual != null){
+                addAfter(actual, obj);
+            }
+            else{
+                addLast(obj);
+            }
         }
     }
+}
