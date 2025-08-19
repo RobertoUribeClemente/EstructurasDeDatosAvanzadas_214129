@@ -1,9 +1,11 @@
-public class Paciente {
+public class Paciente  {
     private String nombre;
     private int edad;
     private String identificacion;
     private String direccion;
     private int prioridad;
+    private int llegada;
+    private static int aux = 0;
 
     public Paciente(String nombre, int edad, String identificacion, String direccion, int prioridad) {
         this.nombre = nombre;
@@ -11,6 +13,8 @@ public class Paciente {
         this.identificacion = identificacion;
         this.direccion = direccion;
         this.prioridad = prioridad;
+        this.llegada = aux;
+        aux++;
     }
 
     public String getNombre() {
@@ -39,9 +43,29 @@ public class Paciente {
         this.prioridad = prioridad;
     }
 
+    public int getLlegada(){
+        return llegada;
+    }
+
     @Override
     public String toString() {
         return String.format("Paciente[nombre=%s, edad=%d, identificacion=%s, direccion=%s, prioridad=%d]",
                 nombre, edad, identificacion, direccion, prioridad);
+    }
+
+    public boolean equals(Object obj){
+        if(obj instanceof String)
+            if(this.getIdentificacion().equalsIgnoreCase((String)obj))
+            return true;
+        
+        return false;
+
+    }
+
+    public int compareTo(Object obj){
+        if(obj instanceof Paciente){
+
+        }
+        return -1;
     }
 }
