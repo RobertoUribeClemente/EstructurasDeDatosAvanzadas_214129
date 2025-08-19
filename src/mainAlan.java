@@ -11,6 +11,7 @@ public class mainAlan {
         listaPacientes.agregaOrdenado(paciente3);
 
         System.out.println(listaPacientes);
+
         
     }
 }
