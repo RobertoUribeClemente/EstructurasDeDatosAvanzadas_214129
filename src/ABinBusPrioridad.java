@@ -1,3 +1,4 @@
+
 public class ABinBusPrioridad {
 
     private NodoDoble<Paciente> raiz;
@@ -37,7 +38,7 @@ public class ABinBusPrioridad {
 
     // Buscar paciente por ID (DFS)
     public Paciente searchById(String id) {
-        return searchById(raiz, id);
+        return searchByIdRec(raiz, id);
     }
 
     private Paciente searchByIdRec(NodoDoble<Paciente> node, String id) {
@@ -125,7 +126,7 @@ public class ABinBusPrioridad {
     }
 
     private void toStringInOrder(NodoDoble<Paciente> node, StringBuilder sb) {
-        if (node == null) return;
+        if (node == null) return ;
         toStringInOrder(node.getBefore(), sb);
         sb.append(node.getDato().toString());
         // Añadir salto de línea si no es el último (detectable si hay algo a la derecha
@@ -134,17 +135,19 @@ public class ABinBusPrioridad {
         toStringInOrder(node.getNext(), sb);
     }
     // Inorden: listado por prioridad ascendente (1..10)
-    public String inOrden() {
-        StringBuilder sb = new StringBuilder();
-        inOrdenRec(raiz, sb);
-        return sb.toString();
+    public String inOrden(){
+        StringBuilder sB = new StringBuilder();
+        inOrden(raiz,sB);
+        return sB.toString();
     }
-
-    private void inOrdenRec(NodoDoble<Paciente> node, StringBuilder sb) {
-        if (node == null) return;
-        inOrdenRec(node.getBefore(), sb);
-        sb.append(node.getDato().toString()).append(System.lineSeparator());
-        inOrdenRec(node.getNext(), sb);
+    
+    private void inOrden(NodoDoble<Paciente> actual, StringBuilder sB){
+        if(actual!=null){
+            inOrden(actual.getBefore(), sB);
+            sB.append(actual.getDato()).append(" ");
+            inOrden(actual.getNext(), sB);
+        }
+            
     }
 
 }
