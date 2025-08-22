@@ -61,20 +61,14 @@ public class Paciente implements Comparable <Paciente> {
 
     }
 
-    public int compareTo(Object obj){
-        if(obj instanceof Paciente){
-            if (((Paciente) obj).getPrioridad() > prioridad) {
-                return -1;
-            }
-            else{
-                if (((Paciente) obj).getPrioridad() < prioridad) {
-                    return 1;
-                }
-                else{
-                    return 0;
-                }
-            }
+    @Override
+    public int compareTo(Paciente obj){
+        if (obj.getPrioridad() > prioridad) {
+            return -1;
+        } else if (obj.getPrioridad() < prioridad) {
+            return 1;
+        } else {
+            return 0;
         }
-        return -2;
     }
 }
