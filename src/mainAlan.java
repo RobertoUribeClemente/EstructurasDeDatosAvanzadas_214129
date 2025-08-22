@@ -10,8 +10,6 @@ public class mainAlan {
         listaPacientes.agregaOrdenado(paciente2);
         listaPacientes.agregaOrdenado(paciente3);
 
-        System.out.println(listaPacientes);
-
-        
+        System.out.println(listaPacientes.toString());
     }
-}
+}   
