@@ -1,154 +1,138 @@
-import java.util.LinkedList;
-
 public class ABinBusPrioridad {
-    private class Node {
-        int prioridad;
-        LinkedList<Paciente> cola;
-        Node left, right;
-        Node(int prioridad, Paciente p) {
-            this.prioridad = prioridad;
-            this.cola = new LinkedList<>();
-            this.cola.add(p);
-        }
+
+    private NodoDoble<Paciente> raiz;
+
+    public ABinBusPrioridad() {
+        raiz = null;
     }
 
-    private Node raiz;
+    public boolean isEmpty() {
+        return raiz == null;
+    }
 
-    public ABinBusPrioridad() { raiz = null; }
-
-    public boolean isEmpty() { return raiz == null; }
-
-    // Insertar paciente: si ya existe node para esa prioridad, añadir al final (FIFO)
+    // Insertar: ordena por prioridad ascendente.
+    // Si la prioridad es igual, el nuevo paciente VA A LA DERECHA (dup-right) para preservar FIFO por llegada.
     public void insert(Paciente p) {
-        raiz = insertRec(raiz, p);
+        if (raiz == null) {
+            raiz = new NodoDoble<>(p);
+            return;
+        }
+        NodoDoble<Paciente> actual = raiz;
+        NodoDoble<Paciente> padre = null;
+        boolean aIzq = false;
+        int pr = p.getPrioridad();
+
+        while (actual != null) {
+            int nodePr = actual.getDato().getPrioridad();
+            if (pr < nodePr) {
+                padre = actual; aIzq = true; actual = actual.getBefore();
+            } else {
+                // pr >= nodePr → a la derecha (incluye duplicados)
+                padre = actual; aIzq = false; actual = actual.getNext();
+            }
+        }
+        if (aIzq) padre.setBefore(new NodoDoble<>(p));
+        else padre.setNext(new NodoDoble<>(p));
     }
 
-    private Node insertRec(Node node, Paciente p) {
-        if (node == null) {
-            return new Node(p.getPrioridad(), p);
-        }
-        if (p.getPrioridad() < node.prioridad) {
-            node.left = insertRec(node.left, p);
-        } else if (p.getPrioridad() > node.prioridad) {
-            node.right = insertRec(node.right, p);
-        } else {
-            node.cola.addLast(p);
-        }
-        return node;
-    }
-
-    // Buscar paciente por ID (recorrido completo hasta encontrar)
+    // Buscar paciente por ID (DFS)
     public Paciente searchById(String id) {
         return searchByIdRec(raiz, id);
     }
 
-    private Paciente searchByIdRec(Node node, String id) {
+    private Paciente searchByIdRec(NodoDoble<Paciente> node, String id) {
         if (node == null) return null;
-        // search in this node's queue
-        for (Paciente p : node.cola) {
-            if (p.getIdentificacion().equalsIgnoreCase(id)) return p;
-        }
-        Paciente left = searchByIdRec(node.left, id);
+        Paciente cur = node.getDato();
+        if (cur != null && cur.getIdentificacion().equalsIgnoreCase(id)) return cur;
+        Paciente left = searchByIdRec(node.getBefore(), id);
         if (left != null) return left;
-        return searchByIdRec(node.right, id);
+        return searchByIdRec(node.getNext(), id);
     }
 
-    // Delete paciente por id: eliminar de la cola correspondiente; si cola queda vacía, borrar nodo del BST
-    public boolean deleteById(String id) {
-        ResultDelete res = deleteByIdRec(raiz, null, id);
-        if (res != null) {
-            raiz = res.root; // actualiza raíz si fue modificado
-            return res.deleted;
-        }
-        return false;
+    // Eliminar por ID: devuelve el paciente eliminado (o null si no se encuentra)
+    public Paciente deleteById(String id) {
+        Paciente[] eliminado = new Paciente[1];
+        raiz = deleteByIdRec(raiz, id, eliminado);
+        return eliminado[0];
     }
 
-    // helper to allow updating root
-    private class ResultDelete { Node root; boolean deleted; ResultDelete(Node root, boolean deleted) { this.root = root; this.deleted = deleted; } }
+    private NodoDoble<Paciente> deleteByIdRec(NodoDoble<Paciente> node, String id, Paciente[] eliminado) {
+        if (node == null) return null;
 
-    private ResultDelete deleteByIdRec(Node node, Node parent, String id) {
-        if (node == null) return new ResultDelete(raiz, false);
-        // check this node
-        for (Paciente p : node.cola) {
-            if (p.getIdentificacion().equalsIgnoreCase(id)) {
-                node.cola.remove(p);
-                // if cola empty, remove this node from tree
-                if (node.cola.isEmpty()) {
-                    Node newRoot = deleteNode(node);
-                    // need to reattach newRoot in parent
-                    if (parent == null) {
-                        // deleting root: find replacement
-                        if (node == raiz) raiz = newRoot;
-                    } else {
-                        if (parent.left == node) parent.left = newRoot;
-                        else parent.right = newRoot;
-                    }
-                    return new ResultDelete(raiz, true);
-                } else {
-                    return new ResultDelete(raiz, true);
-                }
-            }
+        // ¿Este nodo?
+        if (node.getDato().getIdentificacion().equalsIgnoreCase(id)) {
+            eliminado[0] = node.getDato();
+            return deleteRoot(node);
         }
-        // traverse
-        if ((resLeftPossible(node.left, id))) {
-            return deleteByIdRec(node.left, node, id);
-        } else {
-            return deleteByIdRec(node.right, node, id);
-        }
-    }
 
-    // small helper: check quickly if id could be in left subtree by scanning lists (we'll just call both to be safe)
-    private boolean resLeftPossible(Node left, String id){
-        // We don't have indexes by id; return true to search.
-        return true;
-    }
+        // Buscar en subárbol izquierdo
+        node.setBefore(deleteByIdRec(node.getBefore(), id, eliminado));
+        if (eliminado[0] != null) return node;
 
-    // Delete a node from BST and return the node that should replace it in parent's pointer.
-    private Node deleteNode(Node node) {
-        if (node.left == null && node.right == null) return null;
-        if (node.left == null) return node.right;
-        if (node.right == null) return node.left;
-        // two children: find inorder successor (min in right)
-        Node succParent = node;
-        Node succ = node.right;
-        while (succ.left != null) {
-            succParent = succ;
-            succ = succ.left;
-        }
-        // copy succ data into node
-        node.prioridad = succ.prioridad;
-        node.cola = succ.cola;
-        // delete successor node
-        if (succParent.left == succ) succParent.left = succ.right;
-        else succParent.right = succ.right;
+        // Buscar en subárbol derecho
+        node.setNext(deleteByIdRec(node.getNext(), id, eliminado));
         return node;
     }
 
-    // Obtener siguiente paciente (más urgente): ir al mínimo (leftmost)
-    public Paciente pollNext() {
-        if (raiz == null) return null;
-        Node parent = null;
-        Node cur = raiz;
-        while (cur.left != null) {
-            parent = cur;
-            cur = cur.left;
-        }
-        // cur es el nodo de prioridad mínima
-        Paciente next = cur.cola.pollFirst();
-        if (next == null) return null;
-        if (cur.cola.isEmpty()) {
-            // eliminar el nodo del árbol
-            Node replacement = deleteNode(cur);
-            if (parent == null) {
-                raiz = replacement;
-            } else {
-                if (parent.left == cur) parent.left = replacement;
-                else parent.right = replacement;
-            }
-        }
-        return next;
+    // Eliminar la raíz de un subárbol y devolver la nueva raíz del subárbol
+    private NodoDoble<Paciente> deleteRoot(NodoDoble<Paciente> node) {
+        if (node.getBefore() == null && node.getNext() == null) return null;
+        if (node.getBefore() == null) return node.getNext();
+        if (node.getNext() == null) return node.getBefore();
+
+        // Dos hijos: reemplazar por sucesor inorden (mínimo del subárbol derecho)
+        NodoDoble<Paciente>[] minNode = new NodoDoble[1];
+        node.setNext(removeMin(node.getNext(), minNode));
+        node.setDato(minNode[0].getDato());
+        return node;
     }
 
+    // Quita el mínimo (extremo izquierdo) de un subárbol y devuelve el nuevo subárbol;
+    // deja el nodo mínimo en minNode[0].
+    private NodoDoble<Paciente> removeMin(NodoDoble<Paciente> node, NodoDoble<Paciente>[] minNode) {
+        if (node.getBefore() == null) {
+            minNode[0] = node;
+            return node.getNext();
+        }
+        node.setBefore(removeMin(node.getBefore(), minNode));
+        return node;
+    }
+
+    // Saca el siguiente paciente (más urgente / FIFO entre iguales)
+    public Paciente pollNext() {
+        if (raiz == null) return null;
+        Paciente[] out = new Paciente[1];
+        raiz = removeLeftmost(raiz, out);
+        return out[0];
+    }
+
+    // Elimina el nodo más a la izquierda del árbol (mínima prioridad) y devuelve el nuevo árbol.
+    private NodoDoble<Paciente> removeLeftmost(NodoDoble<Paciente> node, Paciente[] out) {
+        if (node.getBefore() == null) {
+            out[0] = node.getDato();
+            return node.getNext();
+        }
+        node.setBefore(removeLeftmost(node.getBefore(), out));
+        return node;
+    }
+
+    // Inorden: listado por prioridad ascendente; mismo formato que ListaDoble.toString()
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        toStringInOrder(raiz, sb);
+        return sb.toString();
+    }
+
+    private void toStringInOrder(NodoDoble<Paciente> node, StringBuilder sb) {
+        if (node == null) return;
+        toStringInOrder(node.getBefore(), sb);
+        sb.append(node.getDato().toString());
+        // Añadir salto de línea si no es el último (detectable si hay algo a la derecha
+        // o si queda algo a la izquierda de esa derecha). Para simplicidad, agrega y recorta al final:
+        sb.append(System.lineSeparator());
+        toStringInOrder(node.getNext(), sb);
+    }
     // Inorden: listado por prioridad ascendente (1..10)
     public String inOrden() {
         StringBuilder sb = new StringBuilder();
@@ -156,14 +140,11 @@ public class ABinBusPrioridad {
         return sb.toString();
     }
 
-    private void inOrdenRec(Node node, StringBuilder sb) {
+    private void inOrdenRec(NodoDoble<Paciente> node, StringBuilder sb) {
         if (node == null) return;
-        inOrdenRec(node.left, sb);
-        sb.append("Prioridad ").append(node.prioridad).append(": ");
-        for (Paciente p : node.cola) {
-            sb.append(p.getIdentificacion()).append("(").append(p.getLlegada()).append(") ");
-        }
-        sb.append("\n");
-        inOrdenRec(node.right, sb);
+        inOrdenRec(node.getBefore(), sb);
+        sb.append(node.getDato().toString()).append(System.lineSeparator());
+        inOrdenRec(node.getNext(), sb);
     }
+
 }
