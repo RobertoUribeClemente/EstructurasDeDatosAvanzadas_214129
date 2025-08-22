@@ -62,6 +62,11 @@ public class Paciente implements Comparable <Paciente> {
 
     @Override
     public int compareTo(Paciente obj){
+        
+        
+        if(!this.getIdentificacion().equalsIgnoreCase(obj.getIdentificacion())){
+        
+
         if(obj.getPrioridad() > this.getPrioridad())
             return -1;        //Si el obj tiene menos prioridad que el this
         
@@ -75,7 +80,7 @@ public class Paciente implements Comparable <Paciente> {
             return -1;
         if (obj.getLlegada() < this.getLlegada())
             return 1;
-        
+        }
         return 0;
     }
 }
