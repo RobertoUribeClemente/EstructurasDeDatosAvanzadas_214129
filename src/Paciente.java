@@ -1,4 +1,4 @@
-public class Paciente  {
+public class Paciente implements Comparable <Paciente> {
     private String nombre;
     private int edad;
     private String identificacion;
@@ -54,11 +54,10 @@ public class Paciente  {
     }
 
     public boolean equals(Object obj){
-        if(obj instanceof String)
-            if(this.getIdentificacion().equalsIgnoreCase((String)obj))
-            return true;
-        
-        return false;
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Paciente paciente = (Paciente) obj;
+        return identificacion.equalsIgnoreCase(paciente.identificacion);
 
     }
 
@@ -75,10 +74,7 @@ public class Paciente  {
                     return 0;
                 }
             }
-
         }
-        else{
-            return -2;
-        }
+        return -2;
     }
 }
