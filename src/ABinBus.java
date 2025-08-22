@@ -23,40 +23,6 @@ public class ABinBus<T extends Comparable<T>> {
         }
 
     }
-    /*
-    public String preOrden(){
-        StringBuilder sB= new StringBuilder();
-        preOrden(raiz, sB);
-
-        return sB.toString();
-    }
-
-    private void preOrden(NodoDoble<T> actual, StringBuilder sB){
-        if(actual != null){
-            sB.append(actual.getDato()).append(" ");
-            preOrden(actual.getBefore(), sB);
-            preOrden(actual.getNext(), sB);
-        }
-
-    }
-
-
-
-    public String postOrden(){
-        StringBuilder sB =new StringBuilder();
-        postOrden(raiz, sB);
-        return sB.toString();
-    }
-
-    private void postOrden(NodoDoble<T> actual, StringBuilder sB){
-        if(actual != null){
-            postOrden(actual.getBefore(), sB);
-            postOrden(actual.getNext(), sB);
-            sB.append(actual.getDato()).append(" ");
-        }
-    }
-    */
-
     public boolean agrega(T dato){
         boolean resp;
         if(isEmpty()){
@@ -102,10 +68,6 @@ public class ABinBus<T extends Comparable<T>> {
         num.agrega(950);
 
         System.out.println("\nEn orden inOrden: "+num.inOrden());
-        /*
-         System.out.println("\nEn orden preOrden: "+num.preOrden());
-         System.out.println("\nEn orden postOrden: "+num.postOrden());
-         */
 
     }
 }

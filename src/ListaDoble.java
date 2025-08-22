@@ -11,16 +11,18 @@ public class ListaDoble {
         return primero == null;
     }
 
-    public void addFirst(Paciente dato){
-        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
-        if(!isEmpty()){
-            nuevo.setNext(primero);
-            primero.setBefore(nuevo);
+    private void addFirst(Object obj){
+        if(obj instanceof Paciente dato){
+            NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
+            if(!isEmpty()){
+                nuevo.setNext(primero);
+                primero.setBefore(nuevo);
+            }
+            else{
+                ultimo = nuevo;
+            }
+            primero = nuevo;
         }
-        else{
-            ultimo = nuevo;
-        }
-        primero = nuevo;
     }
 
     public Paciente delFirst(){
@@ -37,15 +39,17 @@ public class ListaDoble {
         return eliminado;
     }
 
-    public void addLast(Paciente dato){
-        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
-        if(isEmpty())
-            primero = nuevo;
-        else{
-            ultimo.setNext(nuevo);
-            nuevo.setBefore(ultimo);
+    private void addLast(Object obj){
+        if(obj instanceof Paciente dato){
+            NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
+            if(isEmpty())
+                primero = nuevo;
+            else{
+                ultimo.setNext(nuevo);
+                nuevo.setBefore(ultimo);
+            }
+            ultimo = nuevo;
         }
-        ultimo = nuevo;
     }
 
     public Paciente delLast(){
@@ -62,7 +66,7 @@ public class ListaDoble {
         return eliminado;
     }
 
-    public void addAfter(NodoDoble<Paciente> actual, Paciente dato){
+    private void addAfter(NodoDoble<Paciente> actual, Paciente dato){
         NodoDoble<Paciente> aux = primero;
         while(aux != null && aux != actual){ // comparar referencia para verificar presencia
             aux = aux.getNext();
@@ -121,8 +125,7 @@ public class ListaDoble {
             addFirst(obj);
         } else {
             NodoDoble<Paciente> actual = primero;
-            int p = obj.getPrioridad();
-            while(actual != null && actual.getDato().getPrioridad() >= p) {
+            while(actual != null && obj.compareTo(actual.getDato()) < 0) {
                 actual = actual.getNext();
             }
             if(actual != null){

@@ -64,20 +64,21 @@ public class Paciente  {
 
     public int compareTo(Object obj){
         if(obj instanceof Paciente){
-            if(((Paciente) obj).getPrioridad() > this.getPrioridad()) //Si el obj tiene menos prioridad que el this
-            return -1;
-            if(((Paciente) obj).getPrioridad() < this.getPrioridad()) //Si el obj tiene más prioridad que el this
-            return 1;
-
-            //Asumiendo que obj y this tengan la misma prioridad, se verá por llegada
-            
-            if(((Paciente) obj).getLlegada() > this.getLlegada())
-            return -1;
-            if(((Paciente) obj).getLlegada() < this.getLlegada())
-            return 1;
-            return 0;
+            if (((Paciente) obj).getPrioridad() > prioridad) {
+                return -1;
+            }
+            else{
+                if (((Paciente) obj).getPrioridad() < prioridad) {
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            }
 
         }
-        return -2;
+        else{
+            return -2;
+        }
     }
 }
