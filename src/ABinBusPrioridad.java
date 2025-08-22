@@ -14,23 +14,27 @@ public class ABinBusPrioridad {
 
     private Node raiz;
 
-    public ABinBusPrioridad() { raiz = null; }
+    public ABinBusPrioridad() { 
+        raiz = null; 
+    }
 
-    public boolean isEmpty() { return raiz == null; }
+    public boolean isEmpty() { 
+        return raiz == null; 
+    }
 
     // Insertar paciente: si ya existe node para esa prioridad, añadir al final (FIFO)
     public void insert(Paciente p) {
-        raiz = insertRec(raiz, p);
+        raiz = insert(raiz, p);
     }
 
-    private Node insertRec(Node node, Paciente p) {
+    private Node insert(Node node, Paciente p) {
         if (node == null) {
             return new Node(p.getPrioridad(), p);
         }
         if (p.getPrioridad() < node.prioridad) {
-            node.left = insertRec(node.left, p);
+            node.left = insert(node.left, p);
         } else if (p.getPrioridad() > node.prioridad) {
-            node.right = insertRec(node.right, p);
+            node.right = insert(node.right, p);
         } else {
             node.cola.addLast(p);
         }
@@ -39,18 +43,18 @@ public class ABinBusPrioridad {
 
     // Buscar paciente por ID (recorrido completo hasta encontrar)
     public Paciente searchById(String id) {
-        return searchByIdRec(raiz, id);
+        return searchById(raiz, id);
     }
 
-    private Paciente searchByIdRec(Node node, String id) {
+    private Paciente searchById(Node node, String id) {
         if (node == null) return null;
         // search in this node's queue
         for (Paciente p : node.cola) {
             if (p.getIdentificacion().equalsIgnoreCase(id)) return p;
         }
-        Paciente left = searchByIdRec(node.left, id);
+        Paciente left = searchById(node.left, id);
         if (left != null) return left;
-        return searchByIdRec(node.right, id);
+        return searchById(node.right, id);
     }
 
     // Delete paciente por id: eliminar de la cola correspondiente; si cola queda vacía, borrar nodo del BST
@@ -64,7 +68,12 @@ public class ABinBusPrioridad {
     }
 
     // helper to allow updating root
-    private class ResultDelete { Node root; boolean deleted; ResultDelete(Node root, boolean deleted) { this.root = root; this.deleted = deleted; } }
+    private class ResultDelete { 
+        Node root; 
+        boolean deleted; 
+        ResultDelete(Node root, boolean deleted) 
+        { this.root = root; this.deleted = deleted; } 
+    }
 
     private ResultDelete deleteByIdRec(Node node, Node parent, String id) {
         if (node == null) return new ResultDelete(raiz, false);
@@ -160,9 +169,9 @@ public class ABinBusPrioridad {
         if (node == null) return;
         inOrdenRec(node.left, sb);
         sb.append("Prioridad ").append(node.prioridad).append(": ");
-        for (Paciente p : node.cola) {
+        for (Paciente p : node.cola) 
             sb.append(p.getIdentificacion()).append("(").append(p.getLlegada()).append(") ");
-        }
+        
         sb.append("\n");
         inOrdenRec(node.right, sb);
     }
