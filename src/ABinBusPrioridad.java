@@ -37,7 +37,7 @@ public class ABinBusPrioridad {
 
     // Buscar paciente por ID (DFS)
     public Paciente searchById(String id) {
-        return searchByIdRec(raiz, id);
+        return searchById(raiz, id);
     }
 
     private Paciente searchByIdRec(NodoDoble<Paciente> node, String id) {
