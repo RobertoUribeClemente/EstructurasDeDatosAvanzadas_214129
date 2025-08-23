@@ -1,10 +1,10 @@
 public class Paciente implements Comparable <Paciente> {
     private String nombre;
     private int edad;
-    private String identificacion;
+    private final String identificacion;
     private String direccion;
     private int prioridad;
-    private int llegada;
+    private final int llegada;
     private static int aux = 0;
 
     public Paciente(String nombre, int edad, String identificacion, String direccion, int prioridad) {
