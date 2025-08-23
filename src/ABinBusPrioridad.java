@@ -25,12 +25,12 @@ public class ABinBusPrioridad {
 
         while (actual != null) {
             int nodePr = actual.getDato().getPrioridad();
-            if (pr < nodePr) {
+            if (pr < nodePr) 
                 padre = actual; aIzq = true; actual = actual.getBefore();
-            } else {
+             else 
                 // pr >= nodePr → a la derecha (incluye duplicados)
                 padre = actual; aIzq = false; actual = actual.getNext();
-            }
+            
         }
         if (aIzq) padre.setBefore(new NodoDoble<>(p));
         else padre.setNext(new NodoDoble<>(p));
