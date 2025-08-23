@@ -32,7 +32,8 @@ public class ABinBusPrioridad {
                 
              else {
                 // pr >= nodePr → a la derecha (incluye duplicados)
-                padre = actual; aIzq = false; actual = actual.getNext();
+                padre = actual; aIzq = false; 
+                actual = actual.getNext();
              }
                 
         }   
@@ -48,10 +49,11 @@ public class ABinBusPrioridad {
 
     private Paciente searchByIdRec(NodoDoble<Paciente> node, String id) {
         if (node == null) return null;
-        Paciente cur = node.getDato();
+            Paciente cur = node.getDato();
         if (cur != null && cur.getIdentificacion().equalsIgnoreCase(id)) return cur;
-        Paciente left = searchByIdRec(node.getBefore(), id);
-        if (left != null) return left;
+            Paciente left = searchByIdRec(node.getBefore(), id);
+        if (left != null) 
+            return left;
         return searchByIdRec(node.getNext(), id);
     }
 
