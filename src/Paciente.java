@@ -1,4 +1,4 @@
-public class Paciente implements Comparable <Paciente> {
+public class Paciente {
     private String nombre;
     private int edad;
     private final String identificacion;
@@ -13,74 +13,63 @@ public class Paciente implements Comparable <Paciente> {
         this.identificacion = identificacion;
         this.direccion = direccion;
         this.prioridad = prioridad;
-        this.llegada = aux;
-        aux++;
+        this.llegada = aux++;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombre() { 
+        return nombre; 
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombre(String nombre) { 
+        this.nombre = nombre; 
     }
-
-    public int getEdad() {
-        return edad;
+    public int getEdad() { 
+        return edad; 
     }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setEdad(int edad) { 
+        this.edad = edad; 
     }
-
-    public String getIdentificacion() {
-        return identificacion;
+    public String getID() { 
+        return identificacion; 
     }
-    public int getPrioridad() {
-        return prioridad;
+    public String getDireccion() { 
+        return direccion; 
     }
-    public void setPrioridad(int prioridad) {
-        this.prioridad = prioridad;
+    public void setDireccion(String direccion) { 
+        this.direccion = direccion; 
     }
-
-    public int getLlegada(){
-        return llegada;
+    public int getPrioridad() { 
+        return prioridad; 
     }
+    public void setPrioridad(int prioridad) { 
+        this.prioridad = prioridad; 
+    }
+    public int getLlegada() { return llegada; }
 
     @Override
-    public String toString() {
-        return String.format("Paciente[nombre=%s, edad=%d, identificacion=%s, direccion=%s, prioridad=%d, llegada=%d]",
-                nombre, edad, identificacion, direccion, prioridad, llegada);
-    }
-
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
-        Paciente paciente = (Paciente) obj;
-        return identificacion.equalsIgnoreCase(paciente.identificacion);
+        Paciente p = (Paciente) obj;
+        return identificacion.equalsIgnoreCase(p.identificacion);
     }
-
     @Override
-    public int compareTo(Paciente obj){
-        
-        
-        if(!this.getIdentificacion().equalsIgnoreCase(obj.getIdentificacion())){
-        
-
-        if(obj.getPrioridad() > this.getPrioridad())
-            return -1;        //Si el obj tiene menos prioridad que el this
-        
-        else if(obj.getPrioridad() < this.getPrioridad())
-            return 1;         //Si el obj tiene más prioridad que el this
-        
-
-        // misma prioridad → se compara llegada
-
-        if (obj.getLlegada() > this.getLlegada())
-            return -1;
-        if (obj.getLlegada() < this.getLlegada())
-            return 1;
-        }
-        return 0;
+    public String toString() {
+        return String.format("""
+                             Paciente{
+                               id         = %s
+                               nombre     = %s
+                               edad       = %d
+                               direccion  = %s
+                               prioridad  = %d
+                               llegada    = %d
+                             }""",
+            identificacion, nombre, edad, direccion, prioridad, llegada
+        );
     }
+     public String toStringSimple() {
+        return String.format("%s | %s (%d) | p=%d | t=%d",
+                identificacion, nombre, edad, prioridad, llegada);
+    }
+
+
 }

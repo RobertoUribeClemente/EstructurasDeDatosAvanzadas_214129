@@ -1,34 +1,34 @@
 public class NodoDoble <T> {
-    private NodoDoble<T> anterior;
-    private NodoDoble<T> siguiente;
+    private NodoDoble<T> izquierdo;
+    private NodoDoble<T> derecho;
     private T dato;
 
     public NodoDoble(T dato) {
         this.dato = dato;
-        this.anterior = null;
-        this.siguiente = null;
+        this.izquierdo = null;
+        this.derecho = null;
     }
 
     public NodoDoble(NodoDoble<T> anterior, NodoDoble<T> siguiente, T dato) {
-        this.anterior = anterior;
-        this.siguiente = siguiente;
+        this.izquierdo = anterior;
+        this.derecho = siguiente;
         this.dato = dato;
     }
 
-    public NodoDoble<T> getBefore() {
-        return anterior;
+    public NodoDoble<T> getIzquierdo() {
+        return izquierdo;
     }
 
-    public void setBefore(NodoDoble<T> anterior) {
-        this.anterior = anterior;
+    public void setIzquierdo(NodoDoble<T> anterior) {
+        this.izquierdo = anterior;
     }
 
-    public NodoDoble<T> getNext() {
-        return siguiente;
+    public NodoDoble<T> getDerecho() {
+        return derecho;
     }
 
-    public void setNext(NodoDoble<T> siguiente) {
-        this.siguiente = siguiente;
+    public void setDerecho(NodoDoble<T> siguiente) {
+        this.derecho = siguiente;
     }
 
     public T getDato() {
