@@ -33,7 +33,7 @@ public class Simulacion {
                     30 + aux % 10,
                     "ID" + aux,
                     "Dirección" + aux,
-                    1 + aux % 5 // prioridad
+                    1 + aux % 10 // prioridad
                 );
 
                 // --------------------
