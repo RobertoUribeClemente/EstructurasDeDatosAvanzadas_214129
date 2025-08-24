@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.List;
 
 public class ABinBusPrioridad {
 
@@ -156,5 +158,20 @@ public class ABinBusPrioridad {
         }
             
     }
+
+    public List<Paciente> inOrdenLista() {
+    List<Paciente> lista = new ArrayList<>();
+    inOrdenRec(raiz, lista);
+    return lista;
+}
+
+private void inOrdenRec(NodoDoble<Paciente> nodo, List<Paciente> lista) {
+    if (nodo != null) {
+        inOrdenRec(nodo.getBefore(), lista);
+        lista.add(nodo.getDato());
+        inOrdenRec(nodo.getNext(), lista);
+    }
+}
+
 
 }
