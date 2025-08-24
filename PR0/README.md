@@ -37,13 +37,13 @@ Este proyecto implementa una simulación de Triage hospitalario utilizando difer
 
 La operación **Insert** muestra un crecimiento casi lineal en el tiempo de ejecución, lo cual concuerda con la complejidad esperada **O(n)**. La operación **Poll** se mantiene más estable.
 
-![Comportamiento de la Lista Doble](img/lista.png)
+![Comportamiento de la Lista Doble](img/ComportamientoListaDoble.png)
 
 ### Árbol Binario
 
 La operación **Insert** es más estable y cercana a **O(log n)**, mientras que **Poll** muestra mayor variabilidad a medida que crece el número de elementos.
 
-![Comportamiento del Árbol Binario](img/arbol.png)
+![Comportamiento del Árbol Binario](img/ComportamientoArbolBinario.png)
 
 ## Discusión
 
