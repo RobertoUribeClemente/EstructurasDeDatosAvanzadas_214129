@@ -65,7 +65,7 @@ public class Simulacion {
                     tiemposPollArbol.add(endPollArbol - startPollArbol);
 
                     long startPollLista = System.nanoTime();
-                    Paciente atendidoLista = lista.popNext();
+                    Paciente atendidoLista = lista.delFirst();
                     long endPollLista = System.nanoTime();
                     tiemposPollLista.add(endPollLista - startPollLista);
 

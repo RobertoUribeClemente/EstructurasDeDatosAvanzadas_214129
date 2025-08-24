@@ -134,4 +134,41 @@ public class ArbolBinario {
         toStringInOrderSimple(n.getDerecho(), sb);
     }
 
+
+    //Los tres métodos de abajo son para desempatar a los pacientes
+    public Paciente pollNext() {
+        if (estaVacio()) 
+            return null;
+    NodoDoble<Paciente> mejor = encontrarMejor(raiz);
+    Paciente p = mejor.getDato();
+    eliminarPaciente(p.getID());
+    return p;
+}
+
+    private NodoDoble<Paciente> encontrarMejor(NodoDoble<Paciente> nodo) {
+    if (nodo == null) 
+        return null;
+
+    NodoDoble<Paciente> izq = encontrarMejor(nodo.getIzquierdo());
+    NodoDoble<Paciente> der = encontrarMejor(nodo.getDerecho());
+    NodoDoble<Paciente> mejor = nodo;
+
+    if (izq != null && compararPacientes(izq.getDato(), mejor.getDato()) < 0) 
+        mejor = izq;
+    
+    if (der != null && compararPacientes(der.getDato(), mejor.getDato()) < 0) 
+        mejor = der;
+    
+    return mejor;
+}
+
+    // devuelve <0 si p1 es mejor (más prioritario) que p2
+    private int compararPacientes(Paciente p1, Paciente p2) {
+    if (p1.getPrioridad() != p2.getPrioridad()) 
+        return Integer.compare(p1.getPrioridad(), p2.getPrioridad());
+    
+    return Integer.compare(p1.getLlegada(), p2.getLlegada());
+    }
+
+
 }
