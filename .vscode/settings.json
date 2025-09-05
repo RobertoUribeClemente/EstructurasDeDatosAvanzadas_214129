@@ -1,8 +1,8 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
-        "src",
-        "PR0"
+        "PR0",
+        "PR1"
     ],
     "java.project.referencedLibraries": [],
 }
