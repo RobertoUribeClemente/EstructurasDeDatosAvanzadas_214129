@@ -1,12 +1,17 @@
 public class ListaDoble {
     private NodoDoble<Paciente> primero;
     private NodoDoble<Paciente> ultimo;
+    private int indice;
 
-    public ListaDoble() {
+    public ListaDoble(int sumaAsignada) {
         primero = null;
         ultimo = null;
+        this.indice=sumaAsignada;
     }
 
+    public int getIndice(){
+        return indice;
+    }
     public boolean isEmpty() {
         return primero == null;
     }
@@ -69,24 +74,6 @@ public class ListaDoble {
             else ultimo.setDerecho(null);
         }
         return eliminado;
-    }
-
-    public void agregaOrdenado(Paciente obj) {
-        if (isEmpty()) {
-            addFirst(obj);
-            return;
-        }
-        NodoDoble<Paciente> actual = primero;
-        while (actual != null && actual.getDato().getPrioridad() <= obj.getPrioridad()) {
-            actual = actual.getDerecho();
-        }
-        if (actual == primero) {
-            addFirst(obj);
-        } else if (actual == null) {
-            addLast(obj);
-        } else {
-            addIzquierdo(actual, obj);
-        }
     }
 
     public Paciente delDato(Paciente dato) {
