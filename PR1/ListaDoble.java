@@ -2,11 +2,13 @@ public class ListaDoble {
     private NodoDoble<Paciente> primero;
     private NodoDoble<Paciente> ultimo;
     private int indice;
+    private int contador;
 
     public ListaDoble(int sumaAsignada) {
         primero = null;
         ultimo = null;
         this.indice=sumaAsignada;
+        this.contador=0;
     }
 
     public int getIndice(){
@@ -16,19 +18,8 @@ public class ListaDoble {
         return primero == null;
     }
 
-    public void addFirst(Paciente dato) {
-        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
-        if (!isEmpty()) {
-            nuevo.setDerecho(primero);
-            primero.setIzquierdo(nuevo);
-        } else {
-            ultimo = nuevo;
-        }
-        primero = nuevo;
-    }
-
     public void addLast(Paciente dato) {
-        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
+        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato, contador++);
         if (isEmpty()) {
             primero = nuevo;
         } else {
@@ -36,81 +27,6 @@ public class ListaDoble {
             nuevo.setIzquierdo(ultimo);
         }
         ultimo = nuevo;
-    }
-
-    private void addIzquierdo(NodoDoble<Paciente> actual, Paciente dato) {
-        if (actual == primero) {
-            addFirst(dato);
-            return;
-        }
-        NodoDoble<Paciente> nuevo = new NodoDoble<>(dato);
-        NodoDoble<Paciente> prev = actual.getIzquierdo();
-        prev.setDerecho(nuevo);
-        nuevo.setIzquierdo(prev);
-        nuevo.setDerecho(actual);
-        actual.setIzquierdo(nuevo);
-    }
-
-    public Paciente delFirst() {
-        Paciente eliminado = null;
-        if (!isEmpty()) {
-            eliminado = primero.getDato();
-            primero = primero.getDerecho();
-            if (primero == null) {
-                ultimo = null;
-            } else {
-                primero.setIzquierdo(null);
-            }
-        }
-        return eliminado;
-    }
-
-    public Paciente delLast() {
-        Paciente eliminado = null;
-        if (!isEmpty()) {
-            eliminado = ultimo.getDato();
-            ultimo = ultimo.getIzquierdo();
-            if (ultimo == null) primero = null;
-            else ultimo.setDerecho(null);
-        }
-        return eliminado;
-    }
-
-    public Paciente delDato(Paciente dato) {
-        Paciente eliminado = null;
-        if (!isEmpty() && dato != null) {
-            NodoDoble<Paciente> actual = primero;
-            while (actual != null && eliminado == null) {
-                if (dato.equals(actual.getDato())) {
-                    eliminado = delNodo(actual);
-                } else {
-                    actual = actual.getDerecho();
-                }
-            }
-        }
-        return eliminado;
-    }
-
-    private Paciente delNodo(NodoDoble<Paciente> nodo) {
-        Paciente dato = nodo.getDato();
-        if (nodo == primero && nodo == ultimo) {
-            primero = null;
-            ultimo = null;
-        } else if (nodo == primero) {
-            primero = primero.getDerecho();
-            if (primero != null) primero.setIzquierdo(null);
-        } else if (nodo == ultimo) {
-            ultimo = ultimo.getIzquierdo();
-            if (ultimo != null) ultimo.setDerecho(null);
-        } else {
-            nodo.getIzquierdo().setDerecho(nodo.getDerecho());
-            nodo.getDerecho().setIzquierdo(nodo.getIzquierdo());
-        }
-        return dato;
-    }
-
-    public Paciente popDerecho() {
-        return delFirst();
     }
 
     @Override
@@ -123,5 +39,12 @@ public class ListaDoble {
             aux = aux.getDerecho();
         }
         return sb.toString();
+    }
+    public boolean masDeUno(){
+        boolean res=false;
+        if(primero.getId()!=ultimo.getId()){
+            res=true;
+        }
+        return res;
     }
 }

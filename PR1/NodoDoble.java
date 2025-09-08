@@ -2,11 +2,13 @@ public class NodoDoble <T> {
     private NodoDoble<T> izquierdo;
     private NodoDoble<T> derecho;
     private T dato;
+    private int id;
 
-    public NodoDoble(T dato) {
+    public NodoDoble(T dato, int num) {
         this.dato = dato;
         this.izquierdo = null;
         this.derecho = null;
+        this.id=num;
     }
 
     public NodoDoble(NodoDoble<T> anterior, NodoDoble<T> siguiente, T dato) {
@@ -38,4 +40,7 @@ public class NodoDoble <T> {
     public void setDato(T dato) {
         this.dato = dato;
     } 
+    public int getId(){
+        return id;
+    }
 }

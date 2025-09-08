@@ -1,5 +1,5 @@
 
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -12,7 +12,7 @@ public class TablaHash {
     }
 
     public boolean agregarPaciente(String nombre) {
-
+        boolean res=false;
         try {
             FileReader file= new FileReader(nombre);
             Scanner lec = new Scanner(file);
@@ -21,32 +21,32 @@ public class TablaHash {
                 int n= lec.nextInt();
 
                 for(int i=0; i<n; i++){
-                    int suma=0;
                     String datos="";
 
                     for(int j=0; j<10; j++){
                         datos=lec.nextLine();
-                        suma+=lec.nextInt();
                     }
 
                     Paciente p= new Paciente(datos);
-                    int k =buscarIndice(suma);
+                    int indice=datos.hashCode();
+                    int k =buscarIndice(indice);
 
-                    if(k!=-1){
+                    if(k!=-1&&indice!=-1){
                         tabla.get(k).addLast(p);
                     }
                     else{
-                        ListaDoble nueva= new ListaDoble(suma);
+                        ListaDoble nueva= new ListaDoble(indice);
                         tabla.add(nueva);
                     }
                 }
+                res=true;
             }
-
+            lec.close();
         } 
         catch (FileNotFoundException ex) {
-        
+            
         }
-
+        return res;
     }
     public int buscarIndice(int indice){
         boolean encontrado=false;
@@ -65,6 +65,18 @@ public class TablaHash {
             if(encontrado){
                 res=i;
             }
+        }
+        return res;
+    }
+    public boolean hayIguales(){
+        int n=tabla.size();
+        boolean iguales=false;
+        int i=0;
+        while(!iguales&&i<n){
+            if(tabla.get(i).masDeUno()){
+                iguales=true;
+            }
+            i++;
         }
         return res;
     }
