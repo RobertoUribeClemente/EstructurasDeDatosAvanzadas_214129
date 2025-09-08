@@ -109,17 +109,6 @@ public class ListaDoble {
         return dato;
     }
 
-    public Paciente searchById(String id) {
-        NodoDoble<Paciente> aux = primero;
-        while (aux != null) {
-            if (aux.getDato().getID().equalsIgnoreCase(id)) {
-                return aux.getDato();
-            }
-            aux = aux.getDerecho();
-        }
-        return null;
-    }
-
     public Paciente popDerecho() {
         return delFirst();
     }
