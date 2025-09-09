@@ -1,6 +1,5 @@
 
 import java.io.*;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,6 +68,7 @@ public class TablaHash {
         return res;
     }
     public boolean hayIguales(){
+        boolean res=false;
         int n=tabla.size();
         boolean iguales=false;
         int i=0;
