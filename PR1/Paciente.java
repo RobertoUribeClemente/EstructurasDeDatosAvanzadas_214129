@@ -1,50 +1,36 @@
-public class Paciente {
-    private String datos;
+import java.util.Arrays;
 
-    public Paciente(String datos){
-        this.datos=datos;
+public class Paciente {
+    private int[] datos;
+
+    public Paciente(int[] datos){
+        if(datos.length != 10)
+            throw new IllegalArgumentException("Un paciente debe tener exactamente 10 datos");
+            //Esto se hizo con el propósito de que se pueda comparar los datos unos con otros. No es lo mismo comparar "002" que "2" ocn el String
+        this.datos = datos.clone();
     }
     
-    public String getDatos(){
-        return datos;
+    public int[] getDatos(){
+        return datos.clone();
     }
     @Override
     public int hashCode() {
-        int suma=-1;
-        if(!datos.isBlank()){
-            String[] particion= datos.split(" ");
-            suma=0;
-            int aux=0;
-            int n=particion.length;
-            for(int i=0; i<n; i++){
-                aux=isInt(particion[i]);
-                if(aux!=-1){
-                suma+=aux;
-                }
-                else{
-                    return -1;
-                }
-            }
-        }
-        return suma;
+       return Arrays.hashCode(datos);
     }
     @Override
     public boolean equals(Object otro){
-        boolean res=false;
-        if(otro instanceof Paciente paciente){
-            if(paciente.getDatos().equalsIgnoreCase(datos)){
-                res=true;
-            }
-        }
-        return res;
+        boolean resp = false;
+        if (this == otro)
+            resp = true;
+        if(!(otro instanceof Paciente))
+            return resp;
+        Paciente p = (Paciente) otro;
+        resp = Arrays.equals(this.datos, p.datos);
+        
+        return resp;
     }
-    private int isInt(String txt){
-        int res=-1;
-        try {
-            res=Integer.parseInt(txt);
-        } 
-        catch (NumberFormatException e) {
-        }
-        return res;
+    
+    public String toString(){
+        return Arrays.toString(datos);
     }
 }

@@ -47,4 +47,19 @@ public class ListaDoble {
         }
         return res;
     }
+
+    public boolean hayDuplicados() {
+        NodoDoble<Paciente> actual = primero;
+        while (actual != null) {
+            NodoDoble<Paciente> siguiente = actual.getDerecho();
+            while (siguiente != null) {
+                if (actual.getDato().equals(siguiente.getDato())) {
+                    return true;
+                }
+                siguiente = siguiente.getDerecho();
+            }
+            actual = actual.getDerecho();
+        }
+        return false;
+    }
 }

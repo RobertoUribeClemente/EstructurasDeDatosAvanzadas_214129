@@ -1,7 +1,6 @@
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class TablaHash {
     private ArrayList<ListaDoble> tabla;
@@ -10,74 +9,57 @@ public class TablaHash {
         tabla = new ArrayList<>();
     }
 
-    public boolean agregarPaciente(String nombre) {
-        boolean res=false;
-        try {
-            FileReader file= new FileReader(nombre);
-            Scanner lec = new Scanner(file);
+    public boolean agregarPacientes(String nombreArchivo) {
+        boolean res = false;
+        try (Scanner lec = new Scanner(new FileReader(nombreArchivo))) {
+            if (lec.hasNextInt()) {
+                int n = lec.nextInt(); // número de pacientes
 
-            if(lec.hasNextInt()){
-                int n= lec.nextInt();
-
-                for(int i=0; i<n; i++){
-                    String datos="";
-
-                    for(int j=0; j<10; j++){
-                        datos=lec.nextLine();
+                for (int i = 0; i < n; i++) {
+                    int[] datos = new int[10];
+                    for (int j = 0; j < 10; j++) {
+                        if (lec.hasNextInt()) {
+                            datos[j] = lec.nextInt();
+                        } else {
+                            throw new IllegalArgumentException("Archivo mal formado en paciente " + (i + 1));
+                        }
                     }
 
-                    Paciente p= new Paciente(datos);
-                    int indice=datos.hashCode();
-                    int k =buscarIndice(indice);
+                    Paciente p = new Paciente(datos);
+                    int indice = p.hashCode();
+                    int k = buscarIndice(indice);
 
-                    if(k!=-1&&indice!=-1){
+                    if (k != -1) {
                         tabla.get(k).addLast(p);
-                    }
-                    else{
-                        ListaDoble nueva= new ListaDoble(indice);
+                    } else {
+                        ListaDoble nueva = new ListaDoble(indice);
+                        nueva.addLast(p);
                         tabla.add(nueva);
                     }
                 }
-                res=true;
+                res = true;
             }
-            lec.close();
-        } 
-        catch (FileNotFoundException ex) {
-            
+        } catch (IOException ex) {
+            System.err.println("Error al leer archivo: " + ex.getMessage());
         }
         return res;
     }
-    public int buscarIndice(int indice){
-        boolean encontrado=false;
-        int res=-1;
-        if(!tabla.isEmpty()){
-            int i=0;
-            int n=tabla.size();
-            while(!encontrado&&i<n){
-                if(tabla.get(i).getIndice()==indice){
-                    encontrado=true;
-                }
-                else{
-                    i++;
-                }
-            }
-            if(encontrado){
-                res=i;
+
+    public int buscarIndice(int indice) {
+        for (int i = 0; i < tabla.size(); i++) {
+            if (tabla.get(i).getIndice() == indice) {
+                return i;
             }
         }
-        return res;
+        return -1;
     }
-    public boolean hayIguales(){
-        boolean res=false;
-        int n=tabla.size();
-        boolean iguales=false;
-        int i=0;
-        while(!iguales&&i<n){
-            if(tabla.get(i).masDeUno()){
-                iguales=true;
+
+    public boolean hayIguales() {
+        for (ListaDoble lista : tabla) {
+            if (lista.hayDuplicados()) {
+                return true;
             }
-            i++;
         }
-        return res;
+        return false;
     }
 }
