@@ -1,12 +1,20 @@
-
 import java.io.*;
 import java.util.*;
 
 public class TablaHash {
     private ArrayList<ListaDoble> tabla;
+    private int capacidad; // tamaño fijo de la tabla (ej. primo)
 
-    public TablaHash() {
-        tabla = new ArrayList<>();
+    public TablaHash(int capacidad) {
+        this.capacidad = capacidad;
+        tabla = new ArrayList<>(capacidad);
+        for (int i = 0; i < capacidad; i++) {
+            tabla.add(null);
+        }
+    }
+
+    private int funcionHash(Paciente p) {
+        return Math.abs(p.hashCode() % capacidad);
     }
 
     public boolean agregarPacientes(String nombreArchivo) {
@@ -26,15 +34,14 @@ public class TablaHash {
                     }
 
                     Paciente p = new Paciente(datos);
-                    int indice = p.hashCode();
-                    int k = buscarIndice(indice);
+                    int indice = funcionHash(p);
 
-                    if (k != -1) {
-                        tabla.get(k).addLast(p);
-                    } else {
+                    if (tabla.get(indice) == null) {
                         ListaDoble nueva = new ListaDoble(indice);
                         nueva.addLast(p);
-                        tabla.add(nueva);
+                        tabla.set(indice, nueva);
+                    } else {
+                        tabla.get(indice).addLast(p);
                     }
                 }
                 res = true;
@@ -45,38 +52,16 @@ public class TablaHash {
         return res;
     }
 
-    private int buscarIndice(int indice) {
-        boolean encontrado = false;
-        int res = -1;
-        if (!tabla.isEmpty()) {
-            int i = 0;
-            int n = tabla.size();
-            while (!encontrado && i < n) {
-                if (tabla.get(i).getIndice() == indice) {
-                    encontrado = true;
-                } else {
-                    i++;
-                }
-            }
-            if (encontrado) {
-                res = i;
-            }
-        }
-        return res;
-    }
-
     /**
-     * Busca si hay pacientes duplicados en TODA la tabla.
-     * Devuelve el número total de duplicados (m).
+     * Busca duplicados en TODA la tabla.
      */
     public int hayDuplicados() {
         int duplicados = 0;
-        int n = tabla.size();
-
-        for (int i = 0; i < n; i++) {
-            duplicados += tabla.get(i).hayDuplicados();
+        for (ListaDoble lista : tabla) {
+            if (lista != null) {
+                duplicados += lista.hayDuplicados();
+            }
         }
-
         return duplicados;
     }
 }
