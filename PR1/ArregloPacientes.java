@@ -11,32 +11,66 @@ public class ArregloPacientes {
         cantidad = 0;
     }
 
+
+
+    /**
+     * Carga los pacientes desde un archivo de texto.
+     * Cada paciente tiene exactamente 10 enteros.
+     */
     public boolean agregarPacientes(String nombreArchivo) {
         boolean res = false;
-        try (Scanner lec = new Scanner(new FileReader(nombreArchivo))) {
+        try {
+            FileReader file = new FileReader(nombreArchivo);
+            Scanner lec = new Scanner(file);
+
             if (lec.hasNextInt()) {
                 int n = lec.nextInt(); // número de pacientes
-
-                if (n > pacientes.length) {
-                    throw new IllegalArgumentException("Capacidad insuficiente en el arreglo");
-                }
+                pacientes = new Paciente[n];
+                cantidad = n;
 
                 for (int i = 0; i < n; i++) {
-                    int[] datos = new int[10];
+                    int[] datosPaciente = new int[10];
+
                     for (int j = 0; j < 10; j++) {
                         if (lec.hasNextInt()) {
-                            datos[j] = lec.nextInt();
+                            datosPaciente[j] = lec.nextInt();
                         } else {
-                            throw new IllegalArgumentException("Archivo mal formado en paciente " + (i + 1));
+                            throw new IllegalArgumentException("Faltan datos para el paciente " + i);
                         }
                     }
-                    pacientes[cantidad++] = new Paciente(datos);
+
+                    pacientes[i] = new Paciente(datosPaciente);
                 }
                 res = true;
             }
-        } catch (IOException ex) {
-            System.err.println("Error al leer archivo: " + ex.getMessage());
+            lec.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println("Archivo no encontrado: " + nombreArchivo);
         }
         return res;
+    }
+
+    /**
+     * Busca duplicados recorriendo el arreglo de forma lineal.
+     * Devuelve el número total de pacientes duplicados (m).
+     */
+    public int hayDuplicados() {
+        if (pacientes == null || cantidad == 0) return 0;
+
+        int duplicados = 0;
+
+        for (int i = 0; i < cantidad; i++) {
+            int repeticiones = 1;
+            for (int j = i + 1; j < cantidad; j++) {
+                if (pacientes[i].equals(pacientes[j])) {
+                    repeticiones++;
+                }
+            }
+            if (repeticiones > 1) {
+                duplicados += repeticiones;
+            }
+        }
+
+        return duplicados;
     }
 }
