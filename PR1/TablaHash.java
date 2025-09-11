@@ -45,21 +45,38 @@ public class TablaHash {
         return res;
     }
 
-    public int buscarIndice(int indice) {
-        for (int i = 0; i < tabla.size(); i++) {
-            if (tabla.get(i).getIndice() == indice) {
-                return i;
+    private int buscarIndice(int indice) {
+        boolean encontrado = false;
+        int res = -1;
+        if (!tabla.isEmpty()) {
+            int i = 0;
+            int n = tabla.size();
+            while (!encontrado && i < n) {
+                if (tabla.get(i).getIndice() == indice) {
+                    encontrado = true;
+                } else {
+                    i++;
+                }
+            }
+            if (encontrado) {
+                res = i;
             }
         }
-        return -1;
+        return res;
     }
 
-    public boolean hayIguales() {
-        for (ListaDoble lista : tabla) {
-            if (lista.hayDuplicados()) {
-                return true;
-            }
+    /**
+     * Busca si hay pacientes duplicados en TODA la tabla.
+     * Devuelve el número total de duplicados (m).
+     */
+    public int hayDuplicados() {
+        int duplicados = 0;
+        int n = tabla.size();
+
+        for (int i = 0; i < n; i++) {
+            duplicados += tabla.get(i).hayDuplicados();
         }
-        return false;
+
+        return duplicados;
     }
 }
