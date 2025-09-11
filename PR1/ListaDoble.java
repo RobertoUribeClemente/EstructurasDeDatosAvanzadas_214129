@@ -48,18 +48,32 @@ public class ListaDoble {
         return res;
     }
 
-    public boolean hayDuplicados() {
+     public int hayDuplicados() {
+        if (primero == null) 
+            return 0; // lista vacía
+
+        int duplicados = 0;
         NodoDoble<Paciente> actual = primero;
+
         while (actual != null) {
-            NodoDoble<Paciente> siguiente = actual.getDerecho();
-            while (siguiente != null) {
-                if (actual.getDato().equals(siguiente.getDato())) {
-                    return true;
-                }
-                siguiente = siguiente.getDerecho();
+            int repeticiones = 1;
+            NodoDoble<Paciente> comparador = actual.getDerecho();
+
+            while (comparador != null) {
+                if (actual.getDato().equals(comparador.getDato())) 
+                    repeticiones++;
+                
+                comparador = comparador.getDerecho();
             }
+
+            if (repeticiones > 1) 
+                duplicados += repeticiones;
+            
+
             actual = actual.getDerecho();
         }
-        return false;
+
+        return duplicados;
     }
+
 }
