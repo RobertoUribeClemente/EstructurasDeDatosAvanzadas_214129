@@ -55,22 +55,23 @@ public class ArregloPacientes {
      * Devuelve el número total de pacientes duplicados (m).
      */
     public int hayDuplicados() {
-        if (pacientes == null || cantidad == 0) return 0;
+    if (pacientes == null || cantidad == 0) return 0;
 
-        int duplicados = 0;
+    Map<Paciente, Integer> conteo = new HashMap<>();
 
-        for (int i = 0; i < cantidad; i++) {
-            int repeticiones = 1;
-            for (int j = i + 1; j < cantidad; j++) {
-                if (pacientes[i].equals(pacientes[j])) {
-                    repeticiones++;
-                }
-            }
-            if (repeticiones > 1) {
-                duplicados += repeticiones;
-            }
-        }
-
-        return duplicados;
+    for (int i = 0; i < cantidad; i++) {
+        conteo.put(pacientes[i], conteo.getOrDefault(pacientes[i], 0) + 1);
     }
+
+    int duplicados = 0;
+    for (int repeticiones : conteo.values()) {
+        if (repeticiones > 1) {
+            duplicados += repeticiones; // contamos todas las apariciones
+        }
+    }
+
+    return duplicados;
+}
+
+
 }

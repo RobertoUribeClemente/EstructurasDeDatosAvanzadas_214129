@@ -76,4 +76,8 @@ public class ListaDoble {
         return duplicados;
     }
 
+    public NodoDoble<Paciente> getPrimero() {
+    return primero;
+}
+
 }

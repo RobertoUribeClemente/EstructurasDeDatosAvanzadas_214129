@@ -55,13 +55,30 @@ public class TablaHash {
     /**
      * Busca duplicados en TODA la tabla.
      */
-    public int hayDuplicados() {
-        int duplicados = 0;
-        for (ListaDoble lista : tabla) {
-            if (lista != null) {
-                duplicados += lista.hayDuplicados();
+public int hayDuplicados() {
+    Map<Paciente, Integer> conteo = new HashMap<>();
+
+    for (ListaDoble lista : tabla) {
+        if (lista != null && !lista.isEmpty()) {
+            NodoDoble<Paciente> actual = lista.getPrimero();
+            while (actual != null) {
+                Paciente p = actual.getDato();
+                conteo.put(p, conteo.getOrDefault(p, 0) + 1);
+                actual = actual.getDerecho();
             }
         }
-        return duplicados;
     }
+
+    int duplicados = 0;
+    for (int repeticiones : conteo.values()) {
+        if (repeticiones > 1) {
+            duplicados += repeticiones;
+        }
+    }
+
+    return duplicados;
+}
+
+
+
 }
