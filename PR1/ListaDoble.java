@@ -1,3 +1,4 @@
+
 public class ListaDoble {
     private NodoDoble<Paciente> primero;
     private NodoDoble<Paciente> ultimo;
@@ -20,9 +21,9 @@ public class ListaDoble {
 
     public void addLast(Paciente dato) {
         NodoDoble<Paciente> nuevo = new NodoDoble<>(dato, contador++);
-        if (isEmpty()) {
+        if (isEmpty()) 
             primero = nuevo;
-        } else {
+         else {
             ultimo.setDerecho(nuevo);
             nuevo.setIzquierdo(ultimo);
         }
@@ -42,9 +43,9 @@ public class ListaDoble {
     }
     public boolean masDeUno(){
         boolean res=false;
-        if(primero.getId()!=ultimo.getId()){
+        if(primero.getId()!=ultimo.getId())
             res=true;
-        }
+        
         return res;
     }
 
@@ -61,15 +62,13 @@ public class ListaDoble {
 
             while (comparador != null) {
                 if (actual.getDato().equals(comparador.getDato())) 
-                    repeticiones++;
-                
+                    repeticiones++;            
                 comparador = comparador.getDerecho();
             }
 
             if (repeticiones > 1) 
                 duplicados += repeticiones;
             
-
             actual = actual.getDerecho();
         }
 
@@ -77,7 +76,7 @@ public class ListaDoble {
     }
 
     public NodoDoble<Paciente> getPrimero() {
-    return primero;
-}
+        return primero;
+    }
 
 }

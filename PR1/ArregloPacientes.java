@@ -11,8 +11,6 @@ public class ArregloPacientes {
         cantidad = 0;
     }
 
-
-
     /**
      * Carga los pacientes desde un archivo de texto.
      * Cada paciente tiene exactamente 10 enteros.
@@ -32,11 +30,11 @@ public class ArregloPacientes {
                     int[] datosPaciente = new int[10];
 
                     for (int j = 0; j < 10; j++) {
-                        if (lec.hasNextInt()) {
+                        if (lec.hasNextInt()) 
                             datosPaciente[j] = lec.nextInt();
-                        } else {
+                         else 
                             throw new IllegalArgumentException("Faltan datos para el paciente " + i);
-                        }
+                        
                     }
 
                     pacientes[i] = new Paciente(datosPaciente);
@@ -55,23 +53,23 @@ public class ArregloPacientes {
      * Devuelve el número total de pacientes duplicados (m).
      */
     public int hayDuplicados() {
-    if (pacientes == null || cantidad == 0) return 0;
+        if (pacientes == null || cantidad == 0) 
+        return 0;
 
     Map<Paciente, Integer> conteo = new HashMap<>();
 
-    for (int i = 0; i < cantidad; i++) {
+    for (int i = 0; i < cantidad; i++) 
         conteo.put(pacientes[i], conteo.getOrDefault(pacientes[i], 0) + 1);
-    }
 
     int duplicados = 0;
     for (int repeticiones : conteo.values()) {
-        if (repeticiones > 1) {
+        if (repeticiones > 1) 
             duplicados += repeticiones; // contamos todas las apariciones
-        }
+        
     }
 
-    return duplicados;
-}
+        return duplicados;
+    }   
 
 
 }
