@@ -49,7 +49,16 @@ public class ListaDoble {
         return res;
     }
 
-     public int hayDuplicados() {
+
+    public boolean hayDuplicados(){
+        boolean resp = false;
+        if(cuentaDuplicados() != 0)
+            resp = true;
+        return resp;
+    }
+
+
+    public int cuentaDuplicados() {
         if (primero == null) 
             return 0; // lista vacía
 
