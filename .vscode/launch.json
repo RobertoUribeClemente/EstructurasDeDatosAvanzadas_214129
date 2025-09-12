@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "GeneradorPacientes",
+            "request": "launch",
+            "mainClass": "GeneradorPacientes",
+            "projectName": "EstructurasDeDatosAvanzadas_214129_3ac4e6ac"
+        },
+        {
+            "type": "java",
             "name": "Launch Pruebas",
             "request": "launch",
             "mainClass": "Pruebas",
