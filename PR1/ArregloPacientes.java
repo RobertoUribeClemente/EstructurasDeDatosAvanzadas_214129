@@ -71,5 +71,34 @@ public class ArregloPacientes {
         return duplicados;
     }   
 
+        /**
+     * Versión estrictamente lineal O(n^2).
+     * Recorre el arreglo comparando cada paciente con todos los demás.
+     * Devuelve el número total de pacientes duplicados.
+     */
+    public int hayDuplicadosLineal() {
+        if (pacientes == null || cantidad == 0)
+            return 0;
+
+        int duplicados = 0;
+        boolean[] yaContados = new boolean[cantidad];
+
+        for (int i = 0; i < cantidad; i++) {
+            if (yaContados[i]) continue; // evitar doble conteo
+            int repeticiones = 1;
+
+            for (int j = i + 1; j < cantidad; j++) {
+                if (pacientes[i].equals(pacientes[j])) {
+                    repeticiones++;
+                    yaContados[j] = true;
+                }
+            }
+
+            if (repeticiones > 1) {
+                duplicados += repeticiones;
+            }
+        }
+        return duplicados;
+    }
 
 }
