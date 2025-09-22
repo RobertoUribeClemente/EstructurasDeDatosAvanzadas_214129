@@ -51,8 +51,10 @@ public class ArbolBinarioEstricto {
 
     public boolean validar(String texto) {
         int balance = 0;
+
         for (int i = 0; i < texto.length(); i++) {
             char c = texto.charAt(i);
+            
             if (c == '(') {
                 balance++;
             } else if (c == ')') {
