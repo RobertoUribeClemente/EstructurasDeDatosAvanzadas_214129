@@ -190,9 +190,6 @@ public class ArbolBinarioEstricto {
         }
     }
     
-    // El cálculo de la ruta y las calles es más complejo de replicar 1 a 1 de forma iterativa.
-    // La forma más directa de cumplir la práctica es calcular el peso y contar los nodos.
-    // Aquí te doy una forma de contar las calles (movimientos entre nodos).
     
     // Para la ruta y calles, podemos hacer un segundo recorrido más simple si es necesario,
     // pero el cálculo del peso ya demuestra el uso de la pila.
