@@ -121,4 +121,60 @@ public class ArbolBinarioEstricto {
         }
         return sb.toString();
     }
+    private int cuentaPasos(NodoDoble<Parada> inicio){
+        int peso=0;
+        if(inicio!=null){
+            if(inicio.getIzquierdo()!=null){ // rama
+                peso++;
+                peso+=cuentaPasos(inicio.getDerecho())+cuentaPasos(inicio.getIzquierdo());
+
+            }
+            else{
+                return 0;
+            }
+
+        }
+        return peso;
+    }
+    public String mover(){
+        String res="";
+        if(!estaVacio()){
+            if(cuentaPasos(raiz.getIzquierdo())<cuentaPasos(raiz.getDerecho())){
+                res+="i";
+                res+=mover(raiz.getIzquierdo());
+                res+="d";
+                res+=mover(raiz.getDerecho());
+            }
+            else{
+                res+="d";
+                res+=mover(raiz.getDerecho());
+                res+="i";
+                res+=mover(raiz.getIzquierdo());
+            }
+        }
+        return res;
+    }
+    public String mover(NodoDoble<Parada> inicio){
+        String res="";
+        if(!estaVacio()){
+            if(inicio.getDerecho()!=null){ // si es hoja no se mueve mas y regresa con nada
+                if(cuentaPasos(inicio.getIzquierdo())<cuentaPasos(inicio.getDerecho())){
+                    res+="i";
+                    res+=mover(inicio.getIzquierdo());
+                    res+="d";
+                    res+=mover(inicio.getDerecho());
+                    res+="r";
+                }
+                else{
+                    res+="d";
+                    res+=mover(inicio.getDerecho());
+                    res+="i";   
+                    res+=mover(inicio.getIzquierdo());
+                    res+="r";
+                }
+            }
+        }
+        return res;
+    }
+
 }
