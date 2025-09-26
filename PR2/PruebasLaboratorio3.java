@@ -6,7 +6,7 @@ import java.io.IOException;
 public class PruebasLaboratorio3 {
 
     public static void main(String[] args) {
-        String archivoMapas = "mapas.txt";
+        String archivoMapas = "PR2/mapas.txt";
         String archivoResultados = "resultados_laboratorio3.csv";
 
         System.out.println("Iniciando pruebas de rendimiento para recorridos de árbol...");

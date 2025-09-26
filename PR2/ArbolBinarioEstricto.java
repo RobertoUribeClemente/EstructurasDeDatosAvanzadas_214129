@@ -65,48 +65,54 @@ public class ArbolBinarioEstricto {
         return balance == 0;
     }
 
-    private NodoDoble<Parada> crearRama(Scanner sc) {
-        if (!sc.hasNext()) {
-            throw new IllegalArgumentException("EOF inesperado: se esperaba número o '('");
+    
+private String getNextToken(Scanner sc) {
+    while (sc.hasNext()) {
+        String token = sc.next();
+        if (!token.trim().isEmpty()) {
+            return token;
         }
-        // 2) Caso hoja: número
-        if (sc.hasNextInt()) {
-            int valor = sc.nextInt();
-            return new NodoDoble<>(new Parada(valor));
-        }
-        // 3) Caso rama: '('
-        if (sc.hasNext("\\(")) {
-            sc.next(); 
-            // Subárbol izquierdo
-            if (!sc.hasNext()) {
-                throw new IllegalArgumentException("EOF inesperado: se esperaba subárbol izquierdo");
-            }
-            NodoDoble<Parada> izq = crearRama(sc);
-            // Subárbol derecho
-            if (!sc.hasNext()) {
-                throw new IllegalArgumentException("EOF inesperado: se esperaba subárbol derecho");
-            }
-            NodoDoble<Parada> der = crearRama(sc);
-
-            // Cierre ')'
-            if (!sc.hasNext()) {
-                throw new IllegalArgumentException("EOF inesperado: se esperaba ')'");
-            }
-            if (!sc.hasNext("\\)")) {
-                String tok = sc.next();
-                throw new IllegalArgumentException("Token inesperado: " + tok + " (se esperaba ')')");
-            }
-            sc.next(); 
-
-            NodoDoble<Parada> nodo = new NodoDoble<>(null);
-            nodo.setIzquierdo(izq);
-            nodo.setDerecho(der);
-            return nodo;
-        }
-        // 4) Token inválido
-        String tok = sc.next();
-        throw new IllegalArgumentException("Token inesperado: " + tok + " (se esperaba número o '(')");
     }
+    return null;
+}
+    // --- REEMPLAZA TU MÉTODO crearRama CON ESTE ---
+private NodoDoble<Parada> crearRama(Scanner sc) {
+    if (!sc.hasNext()) {
+        throw new IllegalArgumentException("EOF inesperado: se esperaba número o '('");
+    }
+
+    // Usaremos un peek para ver el siguiente token sin consumirlo
+    String token = sc.next();
+
+    // 2) Caso hoja: es un número
+    try {
+        int valor = Integer.parseInt(token);
+        return new NodoDoble<>(new Parada(valor));
+    } catch (NumberFormatException e) {
+        // No es un número, debe ser un paréntesis
+    }
+
+    // 3) Caso rama: debe ser '('
+    if (token.equals("(")) {
+        NodoDoble<Parada> izq = crearRama(sc); // Llama recursiva para la izquierda
+        NodoDoble<Parada> der = crearRama(sc); // Llama recursiva para la derecha
+
+        // Ahora, esperamos el ')' de cierre
+        String tokenCierre = getNextToken(sc); // Usamos nuestro nuevo método auxiliar
+
+        if (tokenCierre == null || !tokenCierre.equals(")")) {
+            throw new IllegalArgumentException("Token inesperado: " + tokenCierre + " (se esperaba ')')");
+        }
+
+        NodoDoble<Parada> nodo = new NodoDoble<>(null);
+        nodo.setIzquierdo(izq);
+        nodo.setDerecho(der);
+        return nodo;
+    }
+    
+    // 4) Token inválido
+    throw new IllegalArgumentException("Token inesperado: " + token + " (se esperaba número o '(')");
+}
 
     private String leerArchivoCompleto(String ruta) throws IOException {
         StringBuilder sb = new StringBuilder();
