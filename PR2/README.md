@@ -4,7 +4,7 @@
 - Alan Simei Paredes Vallejo  
 - José Roberto Uribe Clemente  
 
-## 🔧 Descripción del Proyecto
+## Descripción del Proyecto
 
 Este proyecto implementa y compara dos soluciones algorítmicas para resolver un problema de planificación de rutas de recolección de paquetes, representadas como árboles binarios. El objetivo es comparar el rendimiento de un **enfoque recursivo** contra uno **iterativo (usando una Pila)** para recorrer los árboles, calcular el peso total y determinar la ruta.
 
@@ -21,7 +21,7 @@ Se miden los tiempos de ejecución de ambas implementaciones sobre varios mapas 
 * `resultados_laboratorio3.csv` → Salida con los datos de rendimiento para cada algoritmo.
 * `GraficaLab3.jpg` → Visualización de los resultados de rendimiento.
 
-## ▶️ Instrucciones de Compilación y Ejecución
+## Instrucciones de Compilación y Ejecución
 
 1.  **Compilar todos los archivos:**
     ```bash
@@ -35,13 +35,13 @@ Se miden los tiempos de ejecución de ambas implementaciones sobre varios mapas 
 
 3.  El programa imprimirá los resultados en la consola y generará `resultados_laboratorio3.csv`.
 
-## 📈 Gráfica de Resultados Experimentales
+## Gráfica de Resultados Experimentales
 
 La gráfica compara los tiempos de ejecución de ambos algoritmos. El eje X representa la complejidad creciente del mapa y el eje Y el tiempo en nanosegundos.
 
 ![Gráfica Comparativa de Rendimiento](img/GraficaLab3.jpg)
 
-## 🔬 Discusión
+## Discusión
 
 * **Análisis Teórico:** Ambos algoritmos, al tener que recorrer cada nodo y arista del árbol, presentan una complejidad temporal teórica de **O(n)**, donde *n* es el número de nodos. Por lo tanto, se espera que su rendimiento sea lineal y muy similar.
 
