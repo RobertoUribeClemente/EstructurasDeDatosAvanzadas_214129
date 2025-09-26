@@ -220,7 +220,49 @@ public class ArbolBinarioEstricto {
     return "Ruta seguida: (Recorrido Post-Orden Iterativo), Número de calles visitadas: " + callesVisitadas + ", Peso total: " + pesoTotal;
 }
 
+
+
+
+
+public String recorridoRecursivo() {
+    if (estaVacio()) {
+        return "Ruta: , Número de calles visitadas: 0, Peso total: 0.0";
+    }
+    // Usaremos un arreglo para pasar valores por referencia (peso y calles)
+    double[] resultados = new double[2]; // [0] = pesoTotal, [1] = callesVisitadas
+    String ruta = generarRutaRecursiva(raiz, resultados);
     
+    return "Ruta seguida: " + ruta + ", Número de calles visitadas: " + (int)resultados[1] + ", Peso total: " + resultados[0];
+}
+
+private String generarRutaRecursiva(NodoDoble<Parada> nodo, double[] resultados) {
+    // Caso base: es una hoja (oficina)
+    if (nodo.getIzquierdo() == null) {
+        resultados[0] += nodo.getDato().getPeso(); // Sumar peso
+        return ""; // No hay ruta más allá de una hoja
+    }
+
+    // Caso recursivo: es una rama
+    String rutaIzquierda, rutaDerecha;
+    
+    // Visitar subárbol izquierdo
+    resultados[1] += 2; // Calle de ida y vuelta
+    rutaIzquierda = "i" + generarRutaRecursiva(nodo.getIzquierdo(), resultados) + "r";
+    
+    // Visitar subárbol derecho
+    resultados[1] += 2; // Calle de ida y vuelta
+    rutaDerecha = "d" + generarRutaRecursiva(nodo.getDerecho(), resultados) + "r";
+    
+    // Aquí puedes decidir el orden "óptimo" si quieres, o dejarlo fijo.
+    // Este orden es Izquierda -> Derecha.
+    return rutaIzquierda + rutaDerecha;
+}
+    
+
+
+
+
+
     // Si no se regresara a la raiz:
     /*    private int cuentaPasos(NodoDoble<Parada> inicio){
         int peso=0;
