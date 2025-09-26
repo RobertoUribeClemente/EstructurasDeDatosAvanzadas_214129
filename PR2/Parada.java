@@ -7,4 +7,8 @@ public class Parada {
     public Parada(int peso){
         this.peso=peso;
     }
+
+    public float getPeso(){
+        return peso;
+    }
 }
