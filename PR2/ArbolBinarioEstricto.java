@@ -12,34 +12,72 @@ public class ArbolBinarioEstricto {
         return raiz == null;
     }
 
-    // --- SECCIÓN DE PARSEO Y CREACIÓN DEL ÁRBOL ---
+    // --- SECCIÓN DE CREACIÓN DEL ÁRBOL (NUEVA Y MEJORADA) ---
 
     public boolean crearArbol(String nArchivo) {
-        if (!this.estaVacio()) {
-            return false;
-        }
+        this.raiz = null; // Reiniciar el árbol
         String input;
         try {
             input = leerArchivoCompleto(nArchivo);
+            if (input.trim().isEmpty()) return true; // Archivo vacío, árbol vacío
         } catch (IOException e) {
             System.err.println("No se encontró/leyó el archivo: " + e.getMessage());
             return false;
         }
 
-        if (!validarParentesis(input)) {
-            System.err.println("Error: Paréntesis desbalanceados en el mapa.");
-            return false;
+        // 1. Convertir el String en una lista de tokens
+        Queue<String> tokens = new LinkedList<>();
+        // Usamos una expresión regular para encontrar paréntesis o secuencias de dígitos
+        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("[()]|\\d+");
+        java.util.regex.Matcher matcher = pattern.matcher(input);
+        while (matcher.find()) {
+            tokens.add(matcher.group());
         }
 
-        try (Scanner sc = new Scanner(input)) {
-            // Este delimitador es clave para separar números y paréntesis correctamente
-            sc.useDelimiter("\\s+|(?=[()])|(?<=[()])");
-            this.raiz = crearRama(sc);
+        // 2. Construir el árbol a partir de la cola de tokens
+        try {
+            this.raiz = crearRama(tokens);
+            if (!tokens.isEmpty()) {
+                // Si sobran tokens, la estructura es incorrecta
+                throw new IllegalArgumentException("Tokens extra al final del mapa: " + tokens);
+            }
             return true;
         } catch (Exception e) {
             System.err.println("Error de sintaxis al crear el árbol: " + e.getMessage());
-            this.raiz = null; // Asegurarse que el árbol quede vacío si falla
+            this.raiz = null;
             return false;
+        }
+    }
+    
+    // El método recursivo ahora usa una Cola, es mucho más limpio
+    private NodoDoble<Parada> crearRama(Queue<String> tokens) {
+        if (tokens.isEmpty()) {
+            throw new IllegalArgumentException("Mapa incompleto, se esperaban más datos.");
+        }
+        String token = tokens.poll(); // Saca el primer token de la cola
+
+        if (token.equals("(")) {
+            // Es un nodo interno
+            NodoDoble<Parada> izq = crearRama(tokens);
+            NodoDoble<Parada> der = crearRama(tokens);
+
+            // El siguiente token DEBE ser un ")"
+            if (tokens.isEmpty() || !tokens.poll().equals(")")) {
+                throw new IllegalArgumentException("Se esperaba un ')' para cerrar la expresión.");
+            }
+            
+            NodoDoble<Parada> nodo = new NodoDoble<>(null);
+            nodo.setIzquierdo(izq);
+            nodo.setDerecho(der);
+            return nodo;
+        } else {
+            // Es una hoja (un número)
+            try {
+                int peso = Integer.parseInt(token);
+                return new NodoDoble<>(new Parada(peso));
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Token inválido. Se esperaba un número pero se encontró: " + token);
+            }
         }
     }
 
@@ -47,63 +85,14 @@ public class ArbolBinarioEstricto {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(ruta))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            if ((line = br.readLine()) != null) {
                 sb.append(line.trim());
             }
         }
         return sb.toString();
     }
 
-    private boolean validarParentesis(String texto) {
-        int balance = 0;
-        for (char c : texto.toCharArray()) {
-            if (c == '(') balance++;
-            else if (c == ')') balance--;
-            if (balance < 0) return false;
-        }
-        return balance == 0;
-    }
-
-    /**
-     * VERSIÓN CORREGIDA Y ÚNICA DEL PARSER RECURSIVO.
-     * Esta es la versión que funciona.
-     */
-    private NodoDoble<Parada> crearRama(Scanner sc) {
-        if (!sc.hasNext()) {
-            throw new IllegalStateException("Error: Se alcanzó el fin del mapa inesperadamente.");
-        }
-        String token = sc.next();
-
-        if (token.equals("(")) {
-            // Es un nodo interno, debe tener dos hijos
-            NodoDoble<Parada> izq = crearRama(sc);
-            NodoDoble<Parada> der = crearRama(sc);
-            
-            // Después de los dos hijos, debe venir un ')'
-            if (!sc.hasNext(")")) {
-                throw new IllegalStateException("Error de sintaxis: se esperaba ')' después de los dos hijos.");
-            }
-            sc.next(); // Consumir el ')'
-            
-            NodoDoble<Parada> nodo = new NodoDoble<>(null);
-            nodo.setIzquierdo(izq);
-            nodo.setDerecho(der);
-            return nodo;
-            
-        } else if (token.equals(")")) {
-            throw new IllegalStateException("Error de sintaxis: ')' inesperado.");
-        } else {
-            // No es '(', debe ser un número (una hoja)
-            try {
-                int peso = Integer.parseInt(token);
-                return new NodoDoble<>(new Parada(peso));
-            } catch (NumberFormatException e) {
-                throw new IllegalStateException("Token inesperado: '" + token + "'. Se esperaba un número o '('.");
-            }
-        }
-    }
-
-    // --- SECCIÓN DE RECORRIDOS ---
+    // --- SECCIÓN DE RECORRIDOS (SIN CAMBIOS) ---
 
     public String recorridoRecursivo() {
         if (estaVacio()) {
@@ -115,14 +104,15 @@ public class ArbolBinarioEstricto {
     }
 
     private String generarRutaRecursiva(NodoDoble<Parada> nodo, double[] resultados) {
-        if (nodo.getIzquierdo() == null) {
+        if (nodo.getIzquierdo() == null) { // Es una hoja
             resultados[0] += nodo.getDato().getPeso();
             return "";
         }
+        // Es una rama
         String rutaIzquierda, rutaDerecha;
-        resultados[1] += 2;
+        resultados[1] += 2; // ir y volver de la izquierda
         rutaIzquierda = "i" + generarRutaRecursiva(nodo.getIzquierdo(), resultados) + "r";
-        resultados[1] += 2;
+        resultados[1] += 2; // ir y volver de la derecha
         rutaDerecha = "d" + generarRutaRecursiva(nodo.getDerecho(), resultados) + "r";
         return rutaIzquierda + rutaDerecha;
     }
@@ -133,136 +123,264 @@ public class ArbolBinarioEstricto {
         }
         double pesoTotal = 0;
         int callesVisitadas = 0;
-
-        Pila<NodoDoble<Parada>> pila = new Pila<>();
+        StringBuilder ruta = new StringBuilder();
+        
+        Pila<Object> pila = new Pila<>(); // La pila guardará Nodos o Strings ("r", "i", "d")
         pila.push(raiz);
-        while (!pila.isEmpty()) {
-            NodoDoble<Parada> nodo = pila.pop();
-            if (nodo.getIzquierdo() != null) { // Es un nodo interno
-                callesVisitadas += 4; // 2 de ida, 2 de vuelta
-                pila.push(nodo.getDerecho());
-                pila.push(nodo.getIzquierdo());
-            } else { // Es una hoja
-                pesoTotal += nodo.getDato().getPeso();
+
+        while(!pila.isEmpty()){
+            Object item = pila.pop();
+
+            if (item instanceof NodoDoble){
+                @SuppressWarnings("unchecked")
+                NodoDoble<Parada> nodo = (NodoDoble<Parada>) item;
+
+                if(nodo.getIzquierdo() != null){ // Es una rama
+                    // Empujamos en orden inverso para procesar en orden correcto
+                    pila.push("r"); // de regreso de la derecha
+                    pila.push(nodo.getDerecho());
+                    pila.push("d");
+                    pila.push("r"); // de regreso de la izquierda
+                    pila.push(nodo.getIzquierdo());
+                    pila.push("i");
+                } else { // Es una hoja
+                    pesoTotal += nodo.getDato().getPeso();
+                }
+            } else { // Es un string de ruta
+                ruta.append(item.toString());
             }
         }
-        return "Ruta seguida: (Recorrido Pre-Orden Iterativo), Número de calles visitadas: " + callesVisitadas + ", Peso total: " + pesoTotal;
+        // El número de calles es el largo de la ruta generada
+        callesVisitadas = ruta.length();
+        return "Ruta seguida: " + ruta.toString() + ", Número de calles visitadas: " + callesVisitadas + ", Peso total: " + pesoTotal;
     }
     // Si no se regresara a la raiz:
 
+
+
     /*    private int cuentaPasos(NodoDoble<Parada> inicio){
+
+
 
         int peso=0;
 
+
+
         if(inicio!=null){
+
+
 
             if(inicio.getIzquierdo()!=null){ // rama
 
+
+
                 peso++;
+
+
 
                 peso+=cuentaPasos(inicio.getDerecho())+cuentaPasos(inicio.getIzquierdo());
 
 
 
+
+
+
+
             }
 
+
+
             else{
+
+
 
                 return 0;
 
+
+
             }
 
 
 
+
+
+
+
         }
+
+
 
         return peso;
 
+
+
     }
+
+
 
     public String moverOptimo(){
 
+
+
         String res="";
 
+
+
         if(!estaVacio()){
+
+
 
             if(cuentaPasos(raiz.getIzquierdo())<cuentaPasos(raiz.getDerecho())){
 
+
+
                 res+="i";
+
+
 
                 res+=moverOptimo(raiz.getIzquierdo());
 
+
+
                 res+="d";
+
+
 
                 res+=moverOptimo(raiz.getDerecho());
 
+
+
             }
+
+
 
             else{
 
+
+
                 res+="d";
+
+
 
                 res+=moverOptimo(raiz.getDerecho());
 
+
+
                 res+="i";
+
+
 
                 res+=moverOptimo(raiz.getIzquierdo());
 
+
+
             }
 
+
+
         }
+
+
 
         return res;
 
+
+
     }
+
+
 
     public String moverOptimo(NodoDoble<Parada> inicio){
 
+
+
         String res="";
+
+
 
         if(!estaVacio()){
 
+
+
             if(inicio.getDerecho()!=null){ // si es hoja no se mueve mas y regresa con nada
+
+
 
                 if(cuentaPasos(inicio.getIzquierdo())<cuentaPasos(inicio.getDerecho())){
 
+
+
                     res+="i";
+
+
 
                     res+=moverOptimo(inicio.getIzquierdo());
 
+
+
                     res+="d";
+
+
 
                     res+=moverOptimo(inicio.getDerecho());
 
+
+
                     res+="r";
 
+
+
                 }
+
+
 
                 else{
 
+
+
                     res+="d";
+
+
 
                     res+=moverOptimo(inicio.getDerecho());
 
+
+
                     res+="i";   
+
+
 
                     res+=moverOptimo(inicio.getIzquierdo());
 
+
+
                     res+="r";
+
+
 
                 }
 
+
+
             }
+
+
 
         }
 
+
+
     
+
+
 
     }
 
+
+
      * 
 
+
+
      */
-
-
 }
