@@ -2,10 +2,6 @@
 import java.util.*;
 
 
-/**
- * Implementación genérica de Pila estilo JRUC,
- * pero sin interfaz externa ni excepciones personalizadas.
- */
 public class Pila<T> {
 
     private T[] pila;
