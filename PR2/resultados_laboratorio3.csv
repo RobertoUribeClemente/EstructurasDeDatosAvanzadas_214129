@@ -1,0 +1,9 @@
+Dia,Algoritmo,Tiempo(ns),Resultado
+1,Recursivo,35305200,"Ruta seguida: irdr, Número de calles visitadas: 4, Peso total: 30.0"
+1,Iterativo,6013300,"Ruta seguida: irdr, Número de calles visitadas: 4, Peso total: 30.0"
+2,Recursivo,138100,"Ruta seguida: iirdrrdirdrr, Número de calles visitadas: 12, Peso total: 38.0"
+2,Iterativo,126200,"Ruta seguida: iirdrrdirdrr, Número de calles visitadas: 12, Peso total: 38.0"
+3,Recursivo,140900,"Ruta seguida: iiirdrrdrrdirdirdrrr, Número de calles visitadas: 20, Peso total: 50.0"
+3,Iterativo,342200,"Ruta seguida: iiirdrrdrrdirdirdrrr, Número de calles visitadas: 20, Peso total: 50.0"
+4,Recursivo,168400,"Ruta seguida: iiiirdrrdrrdiirdrrdrrrdiiirdrrdrrdiirdrrdrrr, Número de calles visitadas: 44, Peso total: 78.0"
+4,Iterativo,157400,"Ruta seguida: iiiirdrrdrrdiirdrrdrrrdiiirdrrdrrdiirdrrdrrr, Número de calles visitadas: 44, Peso total: 78.0"
