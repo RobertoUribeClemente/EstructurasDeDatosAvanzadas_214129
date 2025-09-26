@@ -143,29 +143,5 @@ public class Pila<T> {
         return resp;
     }
 
-    // Main de prueba
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static void main(String[] args) {
-        Pila<Integer> p1 = new Pila<>();
-        Object o1 = new String("Hola");
-        boolean resp;
-
-        p1.push(1);
-        p1.push(2);
-        p1.push(3);
-
-        resp = p1.equals(o1);
-        System.out.println(resp ? "Son iguales" : "NO son iguales");
-
-        o1 = new Pila();
-        ((Pila) o1).push(1);
-        ((Pila) o1).push(2);
-        ((Pila) o1).push(3);
-
-        resp = p1.equals(o1);
-        System.out.println(resp ? "Son iguales" : "NO son iguales");
-
-        System.out.println("multiPop(2): " + p1.multiPop(2));
-        System.out.println("Estado pila: " + p1);
-    }
+   
 }
