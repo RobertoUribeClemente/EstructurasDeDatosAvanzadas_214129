@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "temp",
+            "request": "launch",
+            "mainClass": "temp",
+            "projectName": "EstructurasDeDatosAvanzadas_214129_3ac4e6ac"
+        },
+        {
+            "type": "java",
             "name": "PruebasLaboratorio3",
             "request": "launch",
             "mainClass": "PruebasLaboratorio3",

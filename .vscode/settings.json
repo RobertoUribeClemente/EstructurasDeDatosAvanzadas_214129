@@ -1,9 +1,10 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.sourcePaths": [
+        "PR2",
         "PR1",
         "PR0",
-        "PR2"
+        "PR3"
     ],
     "java.project.referencedLibraries": [],
 }
