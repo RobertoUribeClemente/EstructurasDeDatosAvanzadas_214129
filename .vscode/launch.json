@@ -3,6 +3,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "HamburguesasFuerzaBruta",
+            "request": "launch",
+            "mainClass": "HamburguesasFuerzaBruta",
+            "projectName": "EstructurasDeDatosAvanzadas_214129_3ac4e6ac"
+        },
+        {
+            "type": "java",
             "name": "temp",
             "request": "launch",
             "mainClass": "temp",
