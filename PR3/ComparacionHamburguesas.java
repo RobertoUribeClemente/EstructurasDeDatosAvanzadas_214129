@@ -72,7 +72,7 @@ public class ComparacionHamburguesas {
     }
 
     /**
-    * Método recursivo con memoización y lógica simplificada.
+    * Método recursivo con memoización.
     */
     private int calcularMaxHMemo(int n, int m, int t) {
         // --- Casos Base ---
