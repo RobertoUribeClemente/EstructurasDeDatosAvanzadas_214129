@@ -1,4 +1,4 @@
-// Pruebas.java (Corregido)
+// Pruebas.java (Modificado para casos específicos)
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -7,81 +7,71 @@ import java.io.PrintWriter;
 public class Pruebas {
 
     public static void main(String[] args) {
-        // --- 1. CONFIGURACIÓN DE PARÁMETROS Y ARCHIVOS ---
-        int n = 7;
-        int m = 11;
         String carpetaSalida = "PR3";
         String archivoResultados = carpetaSalida + "/resultados_hamburguesas.csv";
 
-        System.out.println("Iniciando pruebas de rendimiento para los algoritmos de hamburguesas...");
+        // --- DEFINICIÓN DE LOS CASOS DE PRUEBA ---
+        // Cada fila es un caso de prueba: {m, n, t}
+        int[][] casosDePrueba = {
+            {4, 9, 10},
+            {4, 9, 100},
+            {4, 9, 1000},
+            {4, 9, 10000}
+            // Puedes agregar más casos aquí, por ejemplo: {5, 8, 50}
+        };
 
-        // --- 2. PREPARACIÓN DEL ENTORNO ---
-        File directorio = new File(carpetaSalida);
-        if (!directorio.exists()) {
-            directorio.mkdirs();
-        }
+        System.out.println("Iniciando pruebas con casos de prueba definidos...");
+        new File(carpetaSalida).mkdirs();
 
-        // --- 3. EJECUCIÓN DE PRUEBAS Y ESCRITURA DE CSV ---
         try (PrintWriter writer = new PrintWriter(new FileWriter(archivoResultados))) {
-            
             writer.println("Metodo,N,M,T,Hamburguesas,TiempoUsado,TiempoSobrante,Duracion_ns");
-
             ComparacionHamburguesas solver = new ComparacionHamburguesas();
 
-            for (int T = 15; T <= 40; T++) {
-                System.out.println("\n--- Procesando para T = " + T + " ---");
+            // --- Bucle que itera sobre cada caso de prueba ---
+            for (int[] caso : casosDePrueba) {
+                int m = caso[0];
+                int n = caso[1];
+                int T = caso[2];
+                
+                System.out.printf("\n--- Probando con m=%d, n=%d, T=%d ---\n", m, n, T);
 
-                // --- Prueba 1: Algoritmo Recursivo Puro ---
+                // No ejecutamos el recursivo puro para valores grandes de T
                 if (T <= 35) {
-                    long inicioRec = System.nanoTime();
-                    Resultado resRec = solver.solveRecursivoPuro(n, m, T);
-                    long finRec = System.nanoTime();
-                    long tiempoRec = finRec - inicioRec;
-                    escribirResultado("Recursivo Puro", n, m, T, resRec, tiempoRec, writer);
+                    ejecutarYGuardar("Recursivo Puro", solver, n, m, T, writer);
                 }
-
-                // --- Prueba 2: Algoritmo con Memoización ---
-                long inicioMemo = System.nanoTime();
-                Resultado resMemo = solver.solveConMemoizacion(n, m, T);
-                long finMemo = System.nanoTime();
-                long tiempoMemo = finMemo - inicioMemo;
-                escribirResultado("Con Memoizacion", n, m, T, resMemo, tiempoMemo, writer);
-
-                // --- Prueba 3: Algoritmo Dinámico Iterativo ---
-                long inicioDin = System.nanoTime(); // <--- ESTA LÍNEA FUE CORREGIDA
-                Resultado resDin = solver.solveDinamico(n, m, T);
-                long finDin = System.nanoTime();
-                long tiempoDin = finDin - inicioDin;
-                escribirResultado("Dinamico Iterativo", n, m, T, resDin, tiempoDin, writer);
+                ejecutarYGuardar("Con Memoizacion", solver, n, m, T, writer);
+                ejecutarYGuardar("Dinamico Iterativo", solver, n, m, T, writer);
             }
-
-            System.out.println("\nPruebas completadas. Los resultados se han guardado en: " + archivoResultados);
+            
+            System.out.println("\nPruebas finalizadas. Revisa el archivo: " + archivoResultados);
 
         } catch (IOException e) {
-            System.err.println("Ocurrió un error al procesar los archivos: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error al escribir el archivo CSV: " + e.getMessage());
         }
     }
+    
+    // El método auxiliar "ejecutarYGuardar" no necesita cambios.
+    private static void ejecutarYGuardar(String nombreMetodo, ComparacionHamburguesas solver, int n, int m, int T, PrintWriter writer) {
+        long startTime = System.nanoTime();
+        Resultado res;
+        switch (nombreMetodo) {
+            case "Recursivo Puro": res = solver.solveRecursivoPuro(n, m, T); break;
+            case "Con Memoizacion": res = solver.solveConMemoizacion(n, m, T); break;
+            default: res = solver.solveDinamico(n, m, T); break;
+        }
+        long endTime = System.nanoTime();
+        long duracion = endTime - startTime;
 
-    private static void escribirResultado(String metodo, int n, int m, int T, Resultado res, long duracion, PrintWriter writer) {
         int hamburguesas = res.hamburguesas;
         int tiempoUsado = res.tiempoUsado;
         int tiempoSobrante = (tiempoUsado != -1) ? T - tiempoUsado : -1;
 
         String salidaConsola = (hamburguesas == -1) ? "No se encontró solución." 
-            : String.format("%d hamburguesas en %d min. (Sobrante: %d)", hamburguesas, tiempoUsado, tiempoSobrante);
-        System.out.printf("  %-20s -> %-50s (Tiempo: %d ns)\n", metodo, salidaConsola, duracion);
+            : String.format("%d h en %d min. (Sobrante: %d)", hamburguesas, tiempoUsado, tiempoSobrante);
+        System.out.printf("  %-20s -> %-50s (Tiempo: %d ns)\n", nombreMetodo, salidaConsola, duracion);
 
-        String lineaCSV = String.join(",",
-                metodo,
-                String.valueOf(n),
-                String.valueOf(m),
-                String.valueOf(T),
-                String.valueOf(hamburguesas),
-                String.valueOf(tiempoUsado),
-                String.valueOf(tiempoSobrante),
-                String.valueOf(duracion)
-        );
+        String lineaCSV = String.join(",", nombreMetodo, String.valueOf(n), String.valueOf(m), String.valueOf(T),
+                String.valueOf(hamburguesas), String.valueOf(tiempoUsado), String.valueOf(tiempoSobrante), String.valueOf(duracion));
         writer.println(lineaCSV);
     }
 }
