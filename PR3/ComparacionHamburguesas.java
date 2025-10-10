@@ -48,7 +48,7 @@ public class ComparacionHamburguesas {
 
 
 
-      // --- 2. SOLUCIÓN CON MEMOIZACIÓN (VERSIÓN SIMPLIFICADA) ---
+      // --- 2. SOLUCIÓN CON MEMOIZACIÓN  ---
 
 
     public int[] solveConMemoizacion(int n, int m, int T) {
