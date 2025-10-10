@@ -1,5 +1,7 @@
 // Pruebas.java
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Pruebas {
 
@@ -16,9 +18,9 @@ public class Pruebas {
 
             for (int T = 15; T <= 40; T++) {
                 System.out.println("\n--- Probando con T = " + T + " ---");
-                if (T <= 35) { 
+                if (T <= 35) 
                     ejecutarYGuardar("Recursivo Puro", solver, n, m, T, writer);
-                }
+                
                 ejecutarYGuardar("Con Memoizacion", solver, n, m, T, writer);
                 ejecutarYGuardar("Dinamico Iterativo", solver, n, m, T, writer);
             }
@@ -32,34 +34,30 @@ public class Pruebas {
     
     private static void ejecutarYGuardar(String nombreMetodo, ComparacionHamburguesas solver, int n, int m, int T, PrintWriter writer) {
         long startTime = System.nanoTime();
-        int[] resultado; // Ahora es un arreglo de enteros
+        Resultado res;
 
         switch (nombreMetodo) {
             case "Recursivo Puro":
-                resultado = solver.solveRecursivoPuro(n, m, T);
+                res = solver.solveRecursivoPuro(n, m, T);
                 break;
             case "Con Memoizacion":
-                resultado = solver.solveConMemoizacion(n, m, T);
+                res = solver.solveConMemoizacion(n, m, T);
                 break;
             default: // Dinamico Iterativo
-                resultado = solver.solveDinamico(n, m, T);
+                res = solver.solveDinamico(n, m, T);
                 break;
         }
 
         long endTime = System.nanoTime();
         long duracion = endTime - startTime;
 
-        // Extraemos los valores del arreglo
-        int hamburguesas = resultado[0];
-        int tiempoUsado = resultado[1];
-        
         // Formateamos la salida para la consola
         String salidaConsola;
-        if (hamburguesas == -1) {
+        if (res.hamburguesas == -1) 
             salidaConsola = "No se encontró solución.";
-        } else {
-            int tiempoSobrante = T - tiempoUsado;
-            salidaConsola = String.format("%d hamburguesas en %d min. (Sobrante: %d)", hamburguesas, tiempoUsado, tiempoSobrante);
+         else {
+            int tiempoSobrante = T - res.tiempoUsado;
+            salidaConsola = String.format("%d hamburguesas en %d min. (Sobrante: %d)", res.hamburguesas, res.tiempoUsado, tiempoSobrante);
         }
         System.out.printf("  %-20s -> %-50s (Tiempo: %d ns)\n", nombreMetodo, salidaConsola, duracion);
 
@@ -69,9 +67,9 @@ public class Pruebas {
                 String.valueOf(n),
                 String.valueOf(m),
                 String.valueOf(T),
-                String.valueOf(hamburguesas),
-                String.valueOf(tiempoUsado),
-                (tiempoUsado != -1) ? String.valueOf(T - tiempoUsado) : "-1",
+                String.valueOf(res.hamburguesas),
+                String.valueOf(res.tiempoUsado),
+                (res.tiempoUsado != -1) ? String.valueOf(T - res.tiempoUsado) : "-1",
                 String.valueOf(duracion)
         );
         writer.println(lineaCSV);
