@@ -1,7 +1,6 @@
 // Pruebas.java
 import java.io.*;
 
-
 public class Pruebas {
 
     public static void main(String[] args) {
@@ -17,9 +16,9 @@ public class Pruebas {
 
             for (int T = 15; T <= 40; T++) {
                 System.out.println("\n--- Probando con T = " + T + " ---");
-                if (T <= 35) { 
+                if (T <= 35) 
                     ejecutarYGuardar("Recursivo Puro", solver, n, m, T, writer);
-                }
+                
                 ejecutarYGuardar("Con Memoizacion", solver, n, m, T, writer);
                 ejecutarYGuardar("Dinamico Iterativo", solver, n, m, T, writer);
             }
@@ -56,9 +55,9 @@ public class Pruebas {
         
         // Formateamos la salida para la consola
         String salidaConsola;
-        if (hamburguesas == -1) {
+        if (hamburguesas == -1) 
             salidaConsola = "No se encontró solución.";
-        } else {
+         else {
             int tiempoSobrante = T - tiempoUsado;
             salidaConsola = String.format("%d hamburguesas en %d min. (Sobrante: %d)", hamburguesas, tiempoUsado, tiempoSobrante);
         }
