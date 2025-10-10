@@ -1,4 +1,4 @@
-// ComparacionHamburguesas.java
+
 import java.util.*;
 
 public class ComparacionHamburguesas {
@@ -10,9 +10,9 @@ public class ComparacionHamburguesas {
         this.n_rec = n;
         this.m_rec = m;
         int hExactas = calcularMaxHRecursivo(T);
-        if (hExactas != -1) {
+        if (hExactas != -1) 
             return new Resultado(hExactas, T);
-        }
+        
         int maxHamb = -1, mejorTiempo = -1;
         for (int t = T - 1; t >= 0; t--) {
             int hActual = calcularMaxHRecursivo(t);
@@ -25,14 +25,20 @@ public class ComparacionHamburguesas {
     }
 
     private int calcularMaxHRecursivo(int t) {
-        if (t < 0) return -1;
-        if (t == 0) return 0;
+        if (t < 0) 
+            return -1;
+        if (t == 0) 
+            return 0;
         int opcionN = calcularMaxHRecursivo(t - n_rec);
         int opcionM = calcularMaxHRecursivo(t - m_rec);
-        if (opcionN == -1 && opcionM == -1) return -1;
+        if (opcionN == -1 && opcionM == -1) 
+            return -1;
         return 1 + Math.max(opcionN, opcionM);
     }
     
+
+
+
     // --- 2. SOLUCIÓN CON MEMOIZACIÓN ---
     private int[] memo;
 
@@ -40,16 +46,16 @@ public class ComparacionHamburguesas {
         this.memo = new int[T + 1];
         Arrays.fill(memo, -2);
         calcularMaxHMemo(n, m, T);
-        if (memo[T] != -1) {
+        if (memo[T] != -1) 
             return new Resultado(memo[T], T);
-        }
+        
         int maxHamb = -1, mejorTiempo = -1;
-        for (int t = T - 1; t >= 0; t--) {
+        for (int t = T - 1; t >= 0; t--) 
             if (memo[t] > maxHamb) {
                 maxHamb = memo[t];
                 mejorTiempo = t;
             }
-        }
+        
         return new Resultado(maxHamb, mejorTiempo);
     }
 
@@ -59,11 +65,11 @@ public class ComparacionHamburguesas {
         if (memo[t] != -2) return memo[t];
         int opcionN = calcularMaxHMemo(n, m, t - n);
         int opcionM = calcularMaxHMemo(n, m, t - m);
-        if (opcionN == -1 && opcionM == -1) {
+        if (opcionN == -1 && opcionM == -1) 
             memo[t] = -1;
-        } else {
+        else 
             memo[t] = 1 + Math.max(opcionN, opcionM);
-        }
+        
         return memo[t];
     }
 
@@ -77,16 +83,16 @@ public class ComparacionHamburguesas {
             int opcionM = (t >= m && dp[t - m] != -1) ? dp[t - m] + 1 : -1;
             dp[t] = Math.max(opcionN, opcionM);
         }
-        if (dp[T] != -1) {
+        if (dp[T] != -1) 
             return new Resultado(dp[T], T);
-        }
+        
         int maxHamb = -1, mejorTiempo = -1;
-        for (int t = T - 1; t >= 0; t--) {
+        for (int t = T - 1; t >= 0; t--) 
             if (dp[t] > maxHamb) {
                 maxHamb = dp[t];
                 mejorTiempo = t;
             }
-        }
+        
         return new Resultado(maxHamb, mejorTiempo);
     }
 }

@@ -1,3 +1,4 @@
+
 public class Resultado {
     public final int hamburguesas;
     public final int tiempoUsado;
