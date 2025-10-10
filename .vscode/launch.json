@@ -34,7 +34,7 @@
             "name": "Launch Pruebas",
             "request": "launch",
             "mainClass": "Pruebas",
-            "cwd": "${workspaceFolder}/PR1"
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
