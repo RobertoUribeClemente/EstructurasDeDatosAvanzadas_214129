@@ -71,7 +71,7 @@ public class ArregloPacientes {
         return duplicados;
     }   
 
-        /**
+    /**
      * Versión estrictamente lineal O(n^2).
      * Recorre el arreglo comparando cada paciente con todos los demás.
      * Devuelve el número total de pacientes duplicados.
