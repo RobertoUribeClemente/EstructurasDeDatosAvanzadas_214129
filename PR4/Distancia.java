@@ -36,21 +36,8 @@ public class Distancia {
 
         return result;
     }
-    public int calculaEDP(String s1, String s2){
-        int n1=s1.length();
-        int n2=s2.length();
-        return calculaEDR(s1, n1, s2, n2);
-    }
-    public int calculaEDP2(String s1, int n1, String s2, int n2){
-        int[][] db= new int[n1+1][n2+1];
-        for(int i=0; i<=n1; i++){
-            db[i]
-        }
-    }
 
-public class EditDistanceTabulation {
-
-    public int calculateEditDistance(String str1, String str2) {
+    public int calculaEDP(String str1, String str2) {
         int n = str1.length();
         int m = str2.length();
 
@@ -90,10 +77,10 @@ public class EditDistanceTabulation {
     }
 
     public static void main(String[] args) {
-        EditDistanceTabulation calculator = new EditDistanceTabulation();
+        Distancia calculator = new Distancia();
         String palabra1 = "INTENTION";
         String palabra2 = "EXECUTION";
-        System.out.println("La distancia (Tabulación) es: " + calculator.calculateEditDistance(palabra1, palabra2)); // Salida: 8
+        System.out.println("La distancia (Tabulación) es: " + calculator.calculaEDP(palabra1, palabra2)); // Salida: 8
     }
 }
 

@@ -44,7 +44,6 @@ public class ComparacionHamburguesas {
 
     public Resultado solveConMemoizacion(int n, int m, int T) {
         this.memo = new int[T + 1];
-        Arrays.fill(memo, -2);
         calcularMaxHMemo(n, m, T);
         if (memo[T] != -1) 
             return new Resultado(memo[T], T);

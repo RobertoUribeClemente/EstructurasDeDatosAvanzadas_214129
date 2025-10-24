@@ -1,10 +1,10 @@
 Metodo,N,M,T,Hamburguesas,TiempoUsado,TiempoSobrante,Duracion_ns
-Recursivo Puro,9,4,10,2,8,2,1738500
-Con Memoizacion,9,4,10,-1,-1,-1,48900
-Dinamico Iterativo,9,4,10,2,8,2,21000
-Con Memoizacion,9,4,100,25,100,0,20800
-Dinamico Iterativo,9,4,100,25,100,0,16400
-Con Memoizacion,9,4,1000,250,1000,0,189200
-Dinamico Iterativo,9,4,1000,250,1000,0,108600
-Con Memoizacion,9,4,10000,2500,10000,0,1289500
-Dinamico Iterativo,9,4,10000,2500,10000,0,1032400
+Recursivo Puro,9,4,10,2,8,2,1287200
+Con Memoizacion,9,4,10,0,10,0,3200
+Dinamico Iterativo,9,4,10,2,8,2,18400
+Con Memoizacion,9,4,100,0,100,0,1400
+Dinamico Iterativo,9,4,100,25,100,0,11000
+Con Memoizacion,9,4,1000,0,1000,0,2000
+Dinamico Iterativo,9,4,1000,250,1000,0,39100
+Con Memoizacion,9,4,10000,0,10000,0,5800
+Dinamico Iterativo,9,4,10000,2500,10000,0,462100
