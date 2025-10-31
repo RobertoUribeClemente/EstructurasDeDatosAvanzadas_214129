@@ -122,44 +122,7 @@ public class Distancia {
     }
 
     
-    public static void main(String[] args) {
-        Distancia calculator = new Distancia();
-        
-        final int COSTO_GAP = 1; 
-        
-        final int COSTO_SUSTITUCION = 2;
-        
-        
-        System.out.println("\n--- Práctica 4: Lectura de Archivos ---");
 
-        try {
-            // Leemos los archivos t1.txt y t2.txt
-            String T1 = calculator.leerArchivoComoString("t1.txt");
-            String T2 = calculator.leerArchivoComoString("t2.txt");
-
-            System.out.println("Archivo T1 leído (primeros 50 chars): " + (T1.length() > 50 ? T1.substring(0, 50) + "..." : T1));
-            System.out.println("Archivo T2 leído (primeros 50 chars): " + (T2.length() > 50 ? T2.substring(0, 50) + "..." : T2));
-
-            // D(T1, T2) - Recursiva (¡CUIDADO! Si T1 y T2 son largos, esto puede tardar horas o fallar)
-            // System.out.println("Calculando D(T1, T2) [Recursiva]...");
-            // int distR_T1_T2 = calculator.calculaED(T1, T2, COSTO_GAP, COSTO_SUSTITUCION);
-            // System.out.println("Distancia Recursiva (T1, T2) = " + distR_T1_T2);
-
-            // D(T2, T1) - PD (Programación Dinámica) (Esta es la forma eficiente)
-            System.out.println("\nCalculando D(T2, T1) [Programación Dinámica]...");
-            int distPD_T2_T1 = calculator.calculaEDP(T2, T1, COSTO_GAP, COSTO_SUSTITUCION);
-            System.out.println("Distancia PD (T2, T1) = " + distPD_T2_T1);
-            
-            // Nota: La distancia de T1 a T2 es la misma que de T2 a T1
-            System.out.println("Calculando D(T1, T2) [Programación Dinámica]...");
-            int distPD_T1_T2 = calculator.calculaEDP(T1, T2, COSTO_GAP, COSTO_SUSTITUCION);
-            System.out.println("Distancia PD (T1, T2) = " + distPD_T1_T2);
-
-
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: Asegúrate de que los archivos 't1.txt' y 't2.txt' existan en el mismo directorio.");
-        }
-    }
 }
 
 
