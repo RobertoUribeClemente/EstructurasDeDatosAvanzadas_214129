@@ -106,7 +106,7 @@ public class Distancia {
                 // Se usa costoGap
                 int deleteOp = dp[i - 1][j] + costoGap;
 
-                // Costo de insertar (viene de la celda de la izquierda usando costoGap
+                // Costo de insertar (viene de la celda de la izquierda) usando costoGap
                 int insertOp = dp[i][j - 1] + costoGap;
 
                 // Costo de sustituir (viene de la celda diagonal)
@@ -121,31 +121,15 @@ public class Distancia {
         return dp[n][m];
     }
 
-    /**
-     * CORREGIDO: El método main ahora sigue las instrucciones de la imagen (Práctica 4).
-     */
+    
     public static void main(String[] args) {
         Distancia calculator = new Distancia();
-
-        // --- Definición de costos según la imagen ---
-        // j = 1 (o g=1) -> costo de Inserción/Eliminación (Gap)
+        
         final int COSTO_GAP = 1; 
-        // α_ij = 2 -> costo de Sustitución
-        final int COSTO_SUSTITUCION = 2; 
-
-        // --- Prueba rápida con las palabras del ejemplo ---
-        String palabra1 = "INTENTION";
-        String palabra2 = "EXECUTION";
         
-        System.out.println("--- Prueba Rápida (INTENTION vs EXECUTION) ---");
-        int distPD = calculator.calculaEDP(palabra1, palabra2, COSTO_GAP, COSTO_SUSTITUCION);
-        System.out.println("Distancia (PD) es: " + distPD); // Salida: 8 (¡Ahora coincide con tu comentario!)
+        final int COSTO_SUSTITUCION = 2;
         
-        // La recursiva es MUY lenta para strings largos, úsala solo para pruebas cortas
-        // int distR = calculator.calculaED(palabra1, palabra2, COSTO_GAP, COSTO_SUSTITUCION);
-        // System.out.println("Distancia (Recursiva) es: " + distR); 
-
-
+        
         System.out.println("\n--- Práctica 4: Lectura de Archivos ---");
 
         try {
