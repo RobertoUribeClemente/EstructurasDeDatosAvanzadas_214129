@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.function.*;
 
 public class Pruebas {
 
@@ -80,8 +79,7 @@ public class Pruebas {
     /**
      * Ejecuta una prueba, mide su tiempo y maneja el timeout de 10 segundos. 
      */
-    private static void ejecutarPrueba(String metodo, int L, String A, String B, 
-                                        DistanciaFunction func, FileWriter writer) throws IOException {
+    private static void ejecutarPrueba(String metodo, int L, String A, String B, DistanciaFunction func, FileWriter writer) throws IOException {
         
         System.out.printf("  Ejecutando: %-15s... ", metodo);
         long startTime = System.nanoTime();
