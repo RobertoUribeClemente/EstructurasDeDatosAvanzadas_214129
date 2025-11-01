@@ -12,9 +12,9 @@ public class Distancia {
         StringBuilder contenido = new StringBuilder();
         try {
             Scanner scanner = new Scanner(new File(nombreArchivo));
-            while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) 
                 contenido.append(scanner.nextLine());
-            }
+            
             scanner.close();
         } catch (FileNotFoundException ex) {
             System.err.println("Archivo no encontrado: " + nombreArchivo);
@@ -51,14 +51,15 @@ public class Distancia {
     }
 
     private int calculaEDMemoR(String s1, int n1, String s2, int n2, int costoGap, int costoSustitucion, Integer[][] memo) {
-        if (n1 == 0) return n2 * costoGap;
-        if (n2 == 0) return n1 * costoGap;
+        if (n1 == 0) 
+            return n2 * costoGap;
+        if (n2 == 0) 
+            return n1 * costoGap;
 
         // 1. Si ya lo calculamos, lo devolvemos
-        if (memo[n1][n2] != null) {
+        if (memo[n1][n2] != null) 
             return memo[n1][n2];
-        }
-
+        
         int subsCost = (s1.charAt(n1 - 1) == s2.charAt(n2 - 1)) ? 0 : costoSustitucion;
 
         int delOP = costoGap + calculaEDMemoR(s1, n1 - 1, s2, n2, costoGap, costoSustitucion, memo);
@@ -77,10 +78,12 @@ public class Distancia {
         int m = str2.length();
         int[][] dp = new int[n + 1][m + 1];
 
-        for (int i = 0; i <= n; i++) dp[i][0] = i * costoGap;
-        for (int j = 0; j <= m; j++) dp[0][j] = j * costoGap;
+        for (int i = 0; i <= n; i++) 
+            dp[i][0] = i * costoGap;
+        for (int j = 0; j <= m; j++) 
+            dp[0][j] = j * costoGap;
 
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++) 
             for (int j = 1; j <= m; j++) {
                 int substitutionCost = (str1.charAt(i - 1) == str2.charAt(j - 1)) ? 0 : costoSustitucion;
                 int deleteOp = dp[i - 1][j] + costoGap;
@@ -88,7 +91,7 @@ public class Distancia {
                 int substituteOp = dp[i - 1][j - 1] + substitutionCost;
                 dp[i][j] = Math.min(deleteOp, Math.min(insertOp, substituteOp));
             }
-        }
+        
         return dp[n][m];
     }
 }
