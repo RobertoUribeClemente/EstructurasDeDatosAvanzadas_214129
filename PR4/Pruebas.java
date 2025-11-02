@@ -1,15 +1,10 @@
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Random;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class Pruebas {
 
-    // --- Configuración de la Práctica 4 ---
+    
     private static final int COSTO_GAP = 1;
     private static final int COSTO_SUSTITUCION = 2;
     private static final int TIMEOUT_SEGUNDOS = 10;
