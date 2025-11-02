@@ -10,51 +10,18 @@ public class Pruebas {
     private static final int TIMEOUT_SEGUNDOS = 10;
     private static final String ARCHIVO_CSV = "resultados_practica4.csv";
 
-    public static void main(String[] args) {
-        Distancia calculator = new Distancia();
-        int[] longitudes = {5, 50, 500, 5000, 50000}; 
 
-        System.out.println("Iniciando Práctica 4: Pruebas de Desempeño...");
-
-        try (FileWriter writer = new FileWriter(ARCHIVO_CSV)) {
-            writer.write("Metodo,Longitud,Distancia,Tiempo_ns,Resultado\n");
-
-            for (int L : longitudes) {
-                System.out.println("\n--- PROBANDO CON LONGITUD = " + L + " ---");
-
-                // Generar textos aleatorios A y B
-                String A = generarTextoAleatorio(L);
-                String B = generarTextoAleatorio(L);
-                System.out.println("Textos generados. Len(A)=" + A.length() + ", Len(B)=" + B.length());
-
-                // --- 1. Prueba Recursiva Pura ---
-                ejecutarPrueba("Recursivo", L, A, B, calculator::calculaED, writer);
-                
-                // --- 2. Prueba Recursiva con Memoización ---
-                ejecutarPrueba("Memoizacion", L, A, B, calculator::calculaEDMemo, writer);
-                
-                // --- 3. Prueba Iterativa con PD ---
-                ejecutarPrueba("Iterativo_PD", L, A, B, calculator::calculaEDP, writer);
-                
-                // Solo reportamos distancias si L no es demasiado grande
-                if (L <= 50000) {
-                    System.out.println("Reporte de Distancias (con PD):");
-                    int dist_AB = calculator.calculaEDP(A, B, COSTO_GAP, COSTO_SUSTITUCION);
-                    int dist_BA = calculator.calculaEDP(B, A, COSTO_GAP, COSTO_SUSTITUCION);
-                    System.out.println("  D(A,B) = " + dist_AB);
-                    System.out.println("  D(B,A) = " + dist_BA);
-                }
-            }
-        } catch (IOException e) {
-            System.err.println("Error fatal al escribir el archivo CSV: " + e.getMessage());
-        }
-        System.out.println("\n--- Pruebas completadas ---");
-        System.out.println("Resultados guardados en: " + ARCHIVO_CSV);
+    private static String generarTextoAleatorio(int longitud) {
+        Random rand = new Random();
+        StringBuilder sb = new StringBuilder(longitud);
+        for (int i = 0; i < longitud; i++) 
+            sb.append((char) ('A' + rand.nextInt(5))); 
+        
+        return sb.toString();
     }
 
-    /**
-     * Interfaz funcional para unificar las tres funciones de distancia.
-     */
+
+    
     @FunctionalInterface
     interface DistanciaFunction {
         int calcular(String s1, String s2, int gap, int sub);
@@ -105,15 +72,50 @@ public class Pruebas {
         writer.write(resultadoCSV);
     }
 
-    /**
-     * Genera un texto aleatorio de una longitud dada.
-     */
-    private static String generarTextoAleatorio(int longitud) {
-        Random rand = new Random();
-        StringBuilder sb = new StringBuilder(longitud);
-        for (int i = 0; i < longitud; i++) 
-            sb.append((char) ('A' + rand.nextInt(5))); 
-        
-        return sb.toString();
+    public static void main(String[] args) {
+        Distancia calculator = new Distancia();
+        int[] longitudes = {5, 50, 500, 5000, 50000}; 
+
+        System.out.println("Iniciando Práctica 4: Pruebas de Desempeño...");
+
+        try (FileWriter writer = new FileWriter(ARCHIVO_CSV)) {
+            writer.write("Metodo,Longitud,Distancia,Tiempo_ns,Resultado\n");
+
+            for (int L : longitudes) {
+                System.out.println("\n--- PROBANDO CON LONGITUD = " + L + " ---");
+
+                // Generar textos aleatorios A y B
+                String A = generarTextoAleatorio(L);
+                String B = generarTextoAleatorio(L);
+                System.out.println("Textos generados. Len(A)=" + A.length() + ", Len(B)=" + B.length());
+
+                // --- 1. Prueba Recursiva Pura ---
+                ejecutarPrueba("Recursivo", L, A, B, calculator::calculaED, writer);
+                
+                // --- 2. Prueba Recursiva con Memoización ---
+                ejecutarPrueba("Memoizacion", L, A, B, calculator::calculaEDMemo, writer);
+                
+                // --- 3. Prueba Iterativa con PD ---
+                ejecutarPrueba("Iterativo_PD", L, A, B, calculator::calculaEDP, writer);
+                
+                // Solo reportamos distancias si L no es demasiado grande
+                if (L <= 50000) {
+                    System.out.println("Reporte de Distancias (con PD):");
+                    int dist_AB = calculator.calculaEDP(A, B, COSTO_GAP, COSTO_SUSTITUCION);
+                    int dist_BA = calculator.calculaEDP(B, A, COSTO_GAP, COSTO_SUSTITUCION);
+                    System.out.println("  D(A,B) = " + dist_AB);
+                    System.out.println("  D(B,A) = " + dist_BA);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error fatal al escribir el archivo CSV: " + e.getMessage());
+        }
+        System.out.println("\n--- Pruebas completadas ---");
+        System.out.println("Resultados guardados en: " + ARCHIVO_CSV);
     }
+
+    
+
+
+    
 }
