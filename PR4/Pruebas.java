@@ -111,9 +111,5 @@ public class Pruebas {
         System.out.println("\n--- Pruebas completadas ---");
         System.out.println("Resultados guardados en: " + ARCHIVO_CSV);
     }
-
-    
-
-
     
 }
