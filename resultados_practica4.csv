@@ -1,0 +1,16 @@
+Metodo,Longitud,Distancia,Tiempo_ns,Resultado
+Recursivo,5,6,4927200,Exitoso
+Memoizacion,5,6,1228100,Exitoso
+Iterativo_PD,5,6,450500,Exitoso
+Recursivo,50,-1,10008897900,Timeout
+Memoizacion,50,46,1122800,Exitoso
+Iterativo_PD,50,46,623300,Exitoso
+Recursivo,500,-1,10009533900,Timeout
+Memoizacion,500,410,16565100,Exitoso
+Iterativo_PD,500,410,18183200,Exitoso
+Recursivo,5000,-1,10006228900,Timeout
+Memoizacion,5000,-1,86898200,Error (StackOverflowError)
+Iterativo_PD,5000,3980,324687800,Exitoso
+Recursivo,50000,-1,5178400,Error (StackOverflowError)
+Memoizacion,50000,-1,4246900300,Error (OutOfMemoryError)
+Iterativo_PD,50000,-1,1725489000,Error (OutOfMemoryError)
