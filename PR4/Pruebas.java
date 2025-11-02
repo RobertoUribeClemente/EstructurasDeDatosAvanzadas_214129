@@ -62,8 +62,6 @@ public class Pruebas {
 
     /**
      * Ejecuta una prueba, mide su tiempo y maneja el timeout de 10 segundos.
-     * Esta función ya captura Errores (como OutOfMemoryError y StackOverflowError)
-     * gracias a la forma en que 'Future.get()' maneja las excepciones.
      */
     private static void ejecutarPrueba(String metodo, int L, String A, String B, 
                                         DistanciaFunction func, FileWriter writer) throws IOException {
