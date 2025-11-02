@@ -97,7 +97,7 @@ public class Pruebas {
                 ejecutarPrueba("Iterativo_PD", L, A, B, calculator::calculaEDP, writer);
                 
                 // Solo reportamos distancias si L no es demasiado grande
-                if (L <= 50000) {
+                if (L <= 500) {
                     System.out.println("Reporte de Distancias (con PD):");
                     int dist_AB = calculator.calculaEDP(A, B, COSTO_GAP, COSTO_SUSTITUCION);
                     int dist_BA = calculator.calculaEDP(B, A, COSTO_GAP, COSTO_SUSTITUCION);
