@@ -18,11 +18,11 @@ Se miden y contrastan los tiempos de ejecución para entradas de texto de longit
 
 ### Archivos del Proyecto
 
-* `src/Distancia.java`: Contiene la lógica central de los tres algoritmos implementados:
+* `PR4/Distancia.java`: Contiene la lógica central de los tres algoritmos implementados:
     * `calculaED()`: Versión recursiva pura (fuerza bruta).
     * `calculaEDMemo()`: Versión recursiva optimizada con memoización.
     * `calculaEDP()`: Versión iterativa con programación dinámica.
-* `src/Pruebas.java`: Clase principal que contiene el `main`. Se encarga de orquestar los experimentos:
+* `PF4/Pruebas.java`: Clase principal que contiene el `main`. Se encarga de orquestar los experimentos:
     * Genera los textos aleatorios para cada longitud de prueba.
     * Ejecuta cada algoritmo midiendo el tiempo con `System.nanoTime()`.
     * Maneja el límite de tiempo de 10 segundos y los errores (`StackOverflowError`, `OutOfMemoryError`).
@@ -36,12 +36,12 @@ Se miden y contrastan los tiempos de ejecución para entradas de texto de longit
 
 **Requerimientos:** Java JDK 8 o superior.
 
-1.  Asegurarse de estar en el directorio raíz `PR4/`.
+1.  Asegurarse de estar en la carpeta `PR4/`.
 2.  Compilar todos los archivos `.java` que se encuentran en la carpeta `src/`:
     ```bash
     javac src/*.java
     ```
-3.  Ejecutar el programa de pruebas. El comando `-cp src` le indica a Java que busque los archivos `.class` dentro de la carpeta `src`:
+3.  Ejecutar el programa de pruebas. El comando `-cp src` le indica a Java que busque los archivos `.class` dentro de la carpeta `PR4`:
     ```bash
     java -cp src Pruebas
     ```
