@@ -125,9 +125,9 @@ public class Pruebas {
         Random rand = new Random();
         StringBuilder sb = new StringBuilder(longitud);
         // Usamos un alfabeto pequeño ('A'-'E') para forzar más coincidencias
-        for (int i = 0; i < longitud; i++) {
+        for (int i = 0; i < longitud; i++) 
             sb.append((char) ('A' + rand.nextInt(5))); 
-        }
+        
         return sb.toString();
     }
 }
