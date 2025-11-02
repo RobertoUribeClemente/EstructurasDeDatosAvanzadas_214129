@@ -27,9 +27,7 @@ public class Pruebas {
         int calcular(String s1, String s2, int gap, int sub);
     }
 
-    /**
-     * Ejecuta una prueba, mide su tiempo y maneja el timeout de 10 segundos.
-     */
+    
     private static void ejecutarPrueba(String metodo, int L, String A, String B, 
                                         DistanciaFunction func, FileWriter writer) throws IOException {
         
