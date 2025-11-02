@@ -23,7 +23,7 @@ public class Distancia {
         return contenido.toString();
     }
 
-    // --- 1. Versión Recursiva Pura (Sin Memoización) --- [cite: 20]
+    // --- 1. Versión Recursiva Pura (Sin Memoización) 
     public int calculaED(String s1, String s2, int costoGap, int costoSustitucion) {
         return calculaEDR(s1, s1.length(), s2, s2.length(), costoGap, costoSustitucion);
     }
@@ -40,6 +40,7 @@ public class Distancia {
 
         return Math.min(Math.min(delOP, insOP), subOP);
     }
+
 
     // --- 2. Versión Recursiva con Memoización --- 
     public int calculaEDMemo(String s1, String s2, int costoGap, int costoSustitucion) {
@@ -72,7 +73,7 @@ public class Distancia {
         return result;
     }
 
-    // --- 3. Versión Iterativa con Programación Dinámica (PD) --- [cite: 22]
+    // --- 3. Versión Iterativa con Programación Dinámica (PD) 
     public int calculaEDP(String str1, String str2, int costoGap, int costoSustitucion) {
         int n = str1.length();
         int m = str2.length();
