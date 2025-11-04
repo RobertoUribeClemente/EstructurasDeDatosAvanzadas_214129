@@ -1,16 +1,19 @@
 Metodo,Longitud,Distancia,Tiempo_ns,Resultado
-Recursivo,5,6,4927200,Exitoso
-Memoizacion,5,6,1228100,Exitoso
-Iterativo_PD,5,6,450500,Exitoso
-Recursivo,50,-1,10008897900,Timeout
-Memoizacion,50,46,1122800,Exitoso
-Iterativo_PD,50,46,623300,Exitoso
-Recursivo,500,-1,10009533900,Timeout
-Memoizacion,500,410,16565100,Exitoso
-Iterativo_PD,500,410,18183200,Exitoso
-Recursivo,5000,-1,10006228900,Timeout
-Memoizacion,5000,-1,86898200,Error (StackOverflowError)
-Iterativo_PD,5000,3980,324687800,Exitoso
-Recursivo,50000,-1,5178400,Error (StackOverflowError)
-Memoizacion,50000,-1,4246900300,Error (OutOfMemoryError)
-Iterativo_PD,50000,-1,1725489000,Error (OutOfMemoryError)
+Recursivo,5,6,3194200,Exitoso
+Memoizacion,5,6,201700,Exitoso
+Iterativo_PD,5,6,150300,Exitoso
+Recursivo,50,-1,10000669400,Timeout
+Memoizacion,50,36,825800,Exitoso
+Iterativo_PD,50,36,352800,Exitoso
+Recursivo,500,-1,10000316100,Timeout
+Memoizacion,500,416,8970300,Exitoso
+Iterativo_PD,500,416,7577800,Exitoso
+Recursivo,5000,-1,10000914000,Timeout
+Memoizacion,5000,-1,56143800,Error (StackOverflowError)
+Iterativo_PD,5000,3958,134995500,Exitoso
+Recursivo,15000,-1,1264500,Error (StackOverflowError)
+Memoizacion,15000,-1,268905400,Error (StackOverflowError)
+Iterativo_PD,15000,11832,857513700,Exitoso
+Recursivo,50000,-1,1498900,Error (StackOverflowError)
+Memoizacion,50000,-1,2926486400,Error (OutOfMemoryError)
+Iterativo_PD,50000,-1,1107195800,Error (OutOfMemoryError)
