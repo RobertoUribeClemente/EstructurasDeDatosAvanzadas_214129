@@ -3,8 +3,6 @@ import java.util.*;
 
 
 public class Distancia {
-
-
     /**
      * Método para leer un archivo de texto completo y devolverlo como un solo String.
      */
