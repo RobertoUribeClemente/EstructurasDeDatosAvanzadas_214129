@@ -76,3 +76,5 @@ La gráfica de resultados (usando una **escala logarítmica** en el eje Y) valid
 
 #### Conclusión
 El experimento demuestra que la **programación dinámica iterativa** es la única solución robusta y eficiente para este problema. La recursión pura es inviable, y la memoización, aunque teóricamente rápida en tiempo, falla en la práctica debido a las limitaciones de la pila de llamadas del sistema. La DP iterativa transforma el problema de uno de tiempo (exponencial) a uno de espacio ($O(n^2)$), que es el límite real para entradas de datos masivas.
+
+https://lichess.org/gbPBo83H
