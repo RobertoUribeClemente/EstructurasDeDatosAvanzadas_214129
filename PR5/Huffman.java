@@ -24,7 +24,7 @@ public class Huffman {
         this.bitBuffer = new StringBuilder();
         this.mapaCharHoja = new HashMap<>();
 
-        for (int i = 1; i <= n; i++) {
+        for (int i = 0; i <= n; i++) {
             mapaCharHoja.put(alfabeto[i], i);
         }
     }
@@ -32,14 +32,14 @@ public class Huffman {
     private void buildHuffman(){
         Cola prioridad= new Cola();
 
-        for(int i=1; i<n; i++){
+        for(int i=0; i<n; i++){
             L[i]=0;
             R[i]=0;
             prioridad.insert(i, f[i]);
         }
         for (int i=n+1; i<2*n+1; i++) {
-            int x=extractMin();
-            int y=extractMin();
+            int x=prioridad.extractMin();
+            int y=prioridad.extractMin();
             f[i]=f[x]+f[y];
             prioridad.insert(i, f[i]);
             L[i]=x;
@@ -50,37 +50,18 @@ public class Huffman {
         P[2*n-1]=0;
     }
 
-    public int extractMin(){ //Extrae el numero con menor frecuencua
-        int imin=-1;
-        int min;
-        int nF=f.length;
-        if(f!=null){
-            min=f[0];
-            imin=0;
-            for(int i=1; i<nF; i++){
-                if(f[i]<min&&f[i]!=-1){
-                    min=F[i];
-                    imin=i;
-                }
-            } 
-            f[imin]=-1;
-        }
-        return imin;
-    }
-
     public String huffmanEncode(String A){
         buildHuffman();
         this.bitBuffer.setLength(0);
         int k=A.length();
         for (int i = 1; i < k; i++) {
-            int x= mapaCharHoja.get(A.charAt(i));
+            Integer x= mapaCharHoja.get(A.charAt(i)); //uso Integer por si es null (no esta en el mapa)
             if (x == null) {
-                throw new IllegalArgumentException("El caracter '" + c + "' no está en el alfabeto.");
+                throw new IllegalArgumentException("El caracter '" + A.charAt(i) + "' no está en el alfabeto.");
             }
-
-            // 5. Llamar al codificador recursivo
             huffmanEncodeOne(x);
         }
+        return bitBuffer.toString();
     }
     private void huffmanEncodeOne(int x){
         if (P[x] != 0) { 

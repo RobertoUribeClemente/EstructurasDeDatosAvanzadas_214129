@@ -3,10 +3,10 @@ public class Nodo <T> {
     private int indice;
     private int frecuencia;
 
-    public Nodo(int i, char fi) {
+    public Nodo(int i, int fi) {
         this.indice=i;
         this.frecuencia=fi;
-
+        this.siguiente=null;
     }
 
     public Nodo(Nodo<T> siguiente, int i, int fi) {
@@ -23,8 +23,11 @@ public class Nodo <T> {
         this.siguiente = siguiente;
     }
 
-    public int getDato() {
+    public int getFrecuencia() {
         return this.frecuencia;
     }
 
+    public int getIndice(){
+        return indice;
+    }
 }

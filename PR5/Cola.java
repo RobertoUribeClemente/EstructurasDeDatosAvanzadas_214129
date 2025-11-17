@@ -1,71 +1,52 @@
-public class Cola<T> {
+public class Cola {
 
-    // Nodo interno para almacenar los elementos
-    private static class Nodo<T> {
-        T valor;
-        Nodo<T> siguiente;
+    private Nodo front;  
+    private int n;   
 
-        Nodo(T valor) {
-            this.valor = valor;
-        }
-    }
-
-    private Nodo<T> front;   // Primer elemento de la cola
-    private Nodo<T> end;      // Último elemento de la cola
-    private int n;      // Cantidad de elementos
-
-    // Constructor
     public Cola() {
         front = null;
-        end = null;
         n = 0;
     }
 
-    // Agregar elemento al endal (enqueue)
+    /**
+     * Inserta un nodo en la lista, manteniéndola ordenada
+     * de menor a mayor getFrecuencia.
+     */
     public void insert(int i, int fi) {
-        Nodo<T> aux = new Nodo<>(valor);
+        Nodo nuevoNodo = new Nodo(i, fi);
+        if (isEmpty() || fi < front.getFrecuencia()) {
+            nuevoNodo.setNext(front);
+            front = nuevoNodo;
+        } 
+        else {
+            Nodo actual = front;
 
-        if (isEmpty()) {
-            front = aux;
-        } else {
-            end.setNext(aux);
+            while (actual.getNext() != null && actual.getNext().getFrecuencia() <= fi) {
+                actual = actual.getNext();
+            }
+            nuevoNodo.setNext(actual.getNext());
+            actual.setNext(nuevoNodo);
         }
-
-        end = aux;
         n++;
     }
 
-    // Eliminar y devolver elemento del front (dequeue)
-    public T pop() {
+    public int extractMin() {
         if (isEmpty()) {
             throw new IllegalStateException("La cola está vacía");
         }
 
-        char valor = front.getDato();
+        // Obtiene el índice del primer nodo (el de menor getFrecuencia)
+        int minIndex = front.getIndice();
         front = front.getNext();
 
-        if (front == null) {
-            end = null;  // Si la cola quedó vacía
-        }
-
         n--;
-        return valor;
+        return minIndex;
     }
 
-    // Ver elemento del front sin eliminarlo
-    public T peek() {
-        if (isEmpty()) {
-            throw new IllegalStateException("La cola está vacía");
-        }
-        return front.valor;
-    }
-
-    // Ver si la cola está vacía
     public boolean isEmpty() {
         return front == null;
     }
 
-    // Obtener tamaño
     public int size() {
         return n;
     }
