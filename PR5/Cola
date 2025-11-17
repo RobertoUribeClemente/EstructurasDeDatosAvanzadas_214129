@@ -1,0 +1,72 @@
+public class Cola<T> {
+
+    // Nodo interno para almacenar los elementos
+    private static class Nodo<T> {
+        T valor;
+        Nodo<T> siguiente;
+
+        Nodo(T valor) {
+            this.valor = valor;
+        }
+    }
+
+    private Nodo<T> front;   // Primer elemento de la cola
+    private Nodo<T> end;      // Último elemento de la cola
+    private int n;      // Cantidad de elementos
+
+    // Constructor
+    public Cola() {
+        front = null;
+        end = null;
+        n = 0;
+    }
+
+    // Agregar elemento al endal (enqueue)
+    public void insert(int i, char fi) {
+        Nodo<T> aux = new Nodo<>(valor);
+
+        if (isEmpty()) {
+            front = aux;
+        } else {
+            end.setNext(aux);
+        }
+
+        end = aux;
+        n++;
+    }
+
+    // Eliminar y devolver elemento del front (dequeue)
+    public T pop() {
+        if (isEmpty()) {
+            throw new IllegalStateException("La cola está vacía");
+        }
+
+        char valor = front.getDato();
+        front = front.getNext();
+
+        if (front == null) {
+            end = null;  // Si la cola quedó vacía
+        }
+
+        n--;
+        return valor;
+    }
+
+    // Ver elemento del front sin eliminarlo
+    public T peek() {
+        if (isEmpty()) {
+            throw new IllegalStateException("La cola está vacía");
+        }
+        return front.valor;
+    }
+
+    // Ver si la cola está vacía
+    public boolean isEmpty() {
+        return front == null;
+    }
+
+    // Obtener tamaño
+    public int size() {
+        return n;
+    }
+}
