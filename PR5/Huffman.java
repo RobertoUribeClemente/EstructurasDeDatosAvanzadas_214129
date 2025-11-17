@@ -65,17 +65,15 @@ public class Huffman {
     }
     private void huffmanEncodeOne(int x){
         if (P[x] != 0) { 
-            // 1. Llamar recursivamente al PADRE de x
+
             huffmanEncodeOne(P[x]);
             int padre = P[x];
-            // 2. Comprobar si 'x' es el hijo IZQUIERDO de su padre
+            // Comprobar si 'x' es el hijo IZQUIERDO de su padre
             if (x == L[padre]) {
-                // B[m] <- 0
                 this.bitBuffer.append('0');
             } 
             // 3. Si no, 'x' es el hijo DERECHO
             else {
-                // B[m] <- 1
                 this.bitBuffer.append('1');
             }
         }
@@ -92,14 +90,14 @@ public class Huffman {
 
         int currentNode = root;
 
-        // 2. Recorrer la cadena de bits
+        // Recorrer la cadena de bits
         for (int i = 0; i < k; i++) {
             char bit = encodedString.charAt(i);
 
-            // 3. Moverse por el árbol
+
             if (bit == '0') {
                 currentNode = L[currentNode]; // Mover a la izquierda
-            } else { // bit == '1'
+            } else { 
                 currentNode = R[currentNode]; // Mover a la derecha
             }
 
@@ -110,8 +108,6 @@ public class Huffman {
                 currentNode = root;
             } 
         }
-
-        // (Opcional) Comprobación de integridad
         if (currentNode != root) {
             System.err.println("Advertencia: La cadena de bits de entrada parece estar incompleta o corrupta.");
         }
