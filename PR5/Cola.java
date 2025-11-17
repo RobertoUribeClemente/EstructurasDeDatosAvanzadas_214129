@@ -22,7 +22,7 @@ public class Cola<T> {
     }
 
     // Agregar elemento al endal (enqueue)
-    public void insert(int i, char fi) {
+    public void insert(int i, int fi) {
         Nodo<T> aux = new Nodo<>(valor);
 
         if (isEmpty()) {

@@ -1,18 +1,18 @@
 public class Nodo <T> {
     private Nodo<T> siguiente;
     private int indice;
-    private char letra;
+    private int frecuencia;
 
     public Nodo(int i, char fi) {
         this.indice=i;
-        this.letra=fi;
+        this.frecuencia=fi;
 
     }
 
-    public Nodo(Nodo<T> siguiente, int i, char fi) {
+    public Nodo(Nodo<T> siguiente, int i, int fi) {
         this.siguiente = siguiente;
         this.indice=i;
-        this.letra=fi;
+        this.frecuencia=fi;
     }
 
     public Nodo<T> getNext() {
@@ -23,8 +23,8 @@ public class Nodo <T> {
         this.siguiente = siguiente;
     }
 
-    public char getDato() {
-        return this.letra;
+    public int getDato() {
+        return this.frecuencia;
     }
 
 }
