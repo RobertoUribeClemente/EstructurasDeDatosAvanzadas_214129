@@ -80,4 +80,42 @@ public class Huffman {
             }
         }
     }
+    public String huffmanDecode(String encodedString) {
+        StringBuilder decodedText = new StringBuilder();
+        int k = encodedString.length();
+
+        int root = 2 * n - 1;
+        
+        if (root < 1) {
+            return ""; 
+        }
+
+        int currentNode = root;
+
+        // 2. Recorrer la cadena de bits
+        for (int i = 0; i < k; i++) {
+            char bit = encodedString.charAt(i);
+
+            // 3. Moverse por el árbol
+            if (bit == '0') {
+                currentNode = L[currentNode]; // Mover a la izquierda
+            } else { // bit == '1'
+                currentNode = R[currentNode]; // Mover a la derecha
+            }
+
+            // Comprobar si hemos llegado a una hoja, osea L[i] == 0 y R[i] == 0.
+            if (L[currentNode] == 0) {
+                
+                decodedText.append(alfabeto[currentNode - 1]);
+                currentNode = root;
+            } 
+        }
+
+        // (Opcional) Comprobación de integridad
+        if (currentNode != root) {
+            System.err.println("Advertencia: La cadena de bits de entrada parece estar incompleta o corrupta.");
+        }
+
+        return decodedText.toString();
+    }
 }
