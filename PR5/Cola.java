@@ -1,7 +1,9 @@
+
 public class Cola {
 
+
     private Nodo front;  
-    private int n;   
+    private int n;       
 
     public Cola() {
         front = null;
@@ -14,32 +16,33 @@ public class Cola {
      */
     public void insert(int i, int fi) {
         Nodo nuevoNodo = new Nodo(i, fi);
+        
         if (isEmpty() || fi < front.getFrecuencia()) {
             nuevoNodo.setNext(front);
             front = nuevoNodo;
         } 
         else {
             Nodo actual = front;
-
             while (actual.getNext() != null && actual.getNext().getFrecuencia() <= fi) {
                 actual = actual.getNext();
             }
             nuevoNodo.setNext(actual.getNext());
             actual.setNext(nuevoNodo);
         }
-        n++;
+        n++; 
     }
 
+    /**
+     * Elimina y devuelve el ÍNDICE del nodo con la menor frecuencia
+     */
     public int extractMin() {
         if (isEmpty()) {
             throw new IllegalStateException("La cola está vacía");
         }
 
-        // Obtiene el índice del primer nodo (el de menor getFrecuencia)
         int minIndex = front.getIndice();
         front = front.getNext();
-
-        n--;
+        n--; 
         return minIndex;
     }
 

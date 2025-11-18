@@ -1,25 +1,25 @@
-public class Nodo <T> {
-    private Nodo<T> siguiente;
+public class Nodo {
+    private Nodo siguiente;
     private int indice;
     private int frecuencia;
 
     public Nodo(int i, int fi) {
-        this.indice=i;
-        this.frecuencia=fi;
-        this.siguiente=null;
+        this.indice = i;
+        this.frecuencia = fi;
+        this.siguiente = null;
     }
 
-    public Nodo(Nodo<T> siguiente, int i, int fi) {
+    public Nodo(Nodo siguiente, int i, int fi) {
         this.siguiente = siguiente;
-        this.indice=i;
-        this.frecuencia=fi;
+        this.indice = i;
+        this.frecuencia = fi;
     }
 
-    public Nodo<T> getNext() {
+    public Nodo getNext() {
         return this.siguiente;
     }
 
-    public void setNext(Nodo<T> siguiente) {
+    public void setNext(Nodo siguiente) {
         this.siguiente = siguiente;
     }
 
@@ -27,7 +27,7 @@ public class Nodo <T> {
         return this.frecuencia;
     }
 
-    public int getIndice(){
+    public int getIndice() {
         return indice;
     }
 }
